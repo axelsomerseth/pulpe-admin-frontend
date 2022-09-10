@@ -9,6 +9,8 @@ import Categories from "./routes/Categories";
 import Products from "./routes/Products";
 import NotFound from "./routes/NotFound";
 
+import "./scss/custom.scss";
+
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
