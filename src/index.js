@@ -9,6 +9,9 @@ import Categories from "./routes/Categories";
 import Products from "./routes/Products";
 import NotFound from "./routes/NotFound";
 
+import Category from "./components/Category";
+import Product from "./components/Product";
+
 import "./scss/custom.scss";
 
 import reportWebVitals from "./reportWebVitals";
@@ -20,8 +23,14 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
-          <Route path="products" element={<Products />}></Route>
-          <Route path="categories" element={<Categories />}></Route>
+          <Route path="categories" element={<Categories />}>
+            <Route path=":categoryId" element={<Category />} />
+            <Route path="new" element={<Category />} />
+          </Route>
+          <Route path="products" element={<Products />}>
+            <Route path=":productId" element={<Product />} />
+            <Route path="new" element={<Product />} />
+          </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
