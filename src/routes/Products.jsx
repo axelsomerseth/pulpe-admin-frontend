@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -31,6 +32,8 @@ function Products() {
                     <h6 className="card-subtitle mb-2 text-muted">
                       {product.description || ""}
                     </h6>
+                    <p className="card-text">Price: {product.price}</p>
+                    <p className="card-text">Stock: {product.stock}</p>
                   </div>
                 </div>
               </div>
@@ -40,6 +43,7 @@ function Products() {
           <></>
         )}
       </div>
+      <Outlet />
     </div>
   );
 }

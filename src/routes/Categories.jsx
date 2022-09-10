@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, Outlet } from "react-router-dom";
 
 function Categories() {
   const [categories, setCategories] = useState([]);
@@ -15,6 +16,14 @@ function Categories() {
 
   return (
     <div className="container">
+      <Outlet />
+      <div className="row mt-3 mb-3">
+        <div className="col d-flex justify-content-center">
+          <Link className="btn btn-primary" to="/categories/new">
+            New Category
+          </Link>
+        </div>
+      </div>
       <div className="row mt-3 mb-3">
         <div className="col d-flex justify-content-center">
           <h1>Categories</h1>
