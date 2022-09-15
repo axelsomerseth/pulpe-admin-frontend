@@ -6,11 +6,15 @@ import "./scss/custom.scss";
 
 import App from "./App";
 import Home from "./routes/Home";
-import Categories from "./routes/Categories";
-import Products from "./routes/Products";
+// import Categories from "./routes/Categories";
+import CategoriesList from "./features/categories/CategoriesList";
+import AddCategoryForm from "./features/categories/AddCategoryForm";
+
+// import Products from "./routes/Products";
+import ProductsList from "./features/products/ProductsList";
 import NotFound from "./routes/NotFound";
 
-import Category from "./components/Category";
+// import Category from "./components/Category";
 import Product from "./components/Product";
 
 import store from "./app/store";
@@ -26,11 +30,10 @@ root.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
-            <Route path="categories" element={<Categories />}>
-              <Route path=":categoryId" element={<Category />} />
-              <Route path="new" element={<Category />} />
+            <Route path="categories" element={<CategoriesList />}>
+              <Route path="new" element={<AddCategoryForm />} />
             </Route>
-            <Route path="products" element={<Products />}>
+            <Route path="products" element={<ProductsList />}>
               <Route path=":productId" element={<Product />} />
               <Route path="new" element={<Product />} />
             </Route>
