@@ -29,10 +29,10 @@ export const categoriesSlice = createSlice({
       return [...state, action.payload];
     },
     categoryEdited: (state, action) => {
-      // TODO: edit the category in the state array.
+      // TODO: edit the category in the state array (if needed).
     },
     categoryRemoved: (state, action) => {
-      // TODO: remove category from state array.
+      // TODO: remove category from state array (if needed).
     },
   },
 });
