@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 import { categoryAdded } from "./categoriesSlice";
 
 function AddCategoryForm() {

@@ -1,6 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function CategoriesList() {
   const categories = useSelector((state) => state.categories);
