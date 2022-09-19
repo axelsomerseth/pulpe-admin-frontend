@@ -6,16 +6,15 @@ import "./scss/custom.scss";
 
 import App from "./App";
 import Home from "./routes/Home";
-// import Categories from "./routes/Categories";
+
 import CategoriesList from "./features/categories/CategoriesList";
 import AddCategoryForm from "./features/categories/AddCategoryForm";
+import SingleCategoryPage from "./features/categories/SingleCategoryPage";
 
-// import Products from "./routes/Products";
 import ProductsList from "./features/products/ProductsList";
-import NotFound from "./routes/NotFound";
-
-// import Category from "./components/Category";
 import Product from "./components/Product";
+
+import NotFound from "./routes/NotFound";
 
 import store from "./app/store";
 import { Provider } from "react-redux";
@@ -31,11 +30,16 @@ root.render(
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
             <Route path="categories" element={<CategoriesList />}>
+              <Route
+                exact
+                path=":categoryId"
+                element={<SingleCategoryPage />}
+              />
               <Route path="new" element={<AddCategoryForm />} />
             </Route>
             <Route path="products" element={<ProductsList />}>
               <Route path=":productId" element={<Product />} />
-              <Route path="new" element={<Product />} />
+              {/* <Route path="new" element={<Product />} /> */}
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
