@@ -10,6 +10,7 @@ import Home from "./routes/Home";
 import CategoriesList from "./features/categories/CategoriesList";
 import AddCategoryForm from "./features/categories/AddCategoryForm";
 import SingleCategoryPage from "./features/categories/SingleCategoryPage";
+import EditCategoryForm from "./features/categories/EditCategoryForm";
 
 import ProductsList from "./features/products/ProductsList";
 import Product from "./components/Product";
@@ -30,16 +31,20 @@ root.render(
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
             <Route path="categories" element={<CategoriesList />}>
+              <Route exact path="new" element={<AddCategoryForm />} />
               <Route
                 exact
                 path=":categoryId"
                 element={<SingleCategoryPage />}
               />
-              <Route path="new" element={<AddCategoryForm />} />
+              <Route
+                exact
+                path=":categoryId/edit"
+                element={<EditCategoryForm />}
+              />
             </Route>
             <Route path="products" element={<ProductsList />}>
               <Route path=":productId" element={<Product />} />
-              {/* <Route path="new" element={<Product />} /> */}
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

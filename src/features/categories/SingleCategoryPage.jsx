@@ -32,7 +32,7 @@ function SingleCategoryPage() {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Category details</Modal.Title>
+          <Modal.Title>Category Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -80,7 +80,7 @@ function SingleCategoryPage() {
                 type="text"
                 className="form-control"
                 id="categoryCreatedAt"
-                value={new Date(category.created_at)}
+                value={category.created_at ? new Date(category.created_at) : ""}
                 readOnly
               />
             </div>
@@ -92,7 +92,7 @@ function SingleCategoryPage() {
                 type="text"
                 className="form-control"
                 id="categoryUpdatedAt"
-                value={new Date(category.updated_at)}
+                value={category.updated_at ? new Date(category.updated_at) : ""}
                 readOnly
               />
             </div>

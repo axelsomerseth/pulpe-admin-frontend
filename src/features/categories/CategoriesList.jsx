@@ -31,7 +31,18 @@ function CategoriesList() {
                     <h6 className="card-subtitle mb-2 text-muted">
                       {category.description || ""}
                     </h6>
-                    <Link to={`/categories/${category.id}`}>View details</Link>
+                    <Link
+                      to={`/categories/${category.id}`}
+                      className="btn btn-primary m-1"
+                    >
+                      View details
+                    </Link>
+                    <Link
+                      to={`/categories/${category.id}/edit`}
+                      className="btn btn-secondary m-1"
+                    >
+                      Edit
+                    </Link>
                   </div>
                 </div>
               </div>

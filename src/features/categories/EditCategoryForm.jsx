@@ -1,33 +1,38 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { useDispatch } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
-import { categoryAdded } from "./categoriesSlice";
+import { categoryEdited } from "./categoriesSlice";
 
-function AddCategoryForm() {
-  const navigate = useNavigate();
+function EditCategoryForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const params = useParams();
+  const { categoryId } = params;
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const category = useSelector((state) =>
+    state.categories.find((category) => category.id === parseInt(categoryId))
+  );
+
+  const [name, setName] = useState(category.name || "");
+  const [description, setDescription] = useState(category.description || "");
 
   const onNameChanged = (e) => setName(e.target.value);
   const onDescriptionChanged = (e) => setDescription(e.target.value);
 
   const onModalClose = () => navigate(-1);
   const onModalSaveChanges = () => {
-    if (name && description) {
+    if (categoryId && name && description) {
       dispatch(
-        categoryAdded({
-          id: nanoid(),
+        categoryEdited({
+          id: parseInt(categoryId),
           name,
           description,
         })
       );
+      navigate(`/categories`);
     }
-    navigate(-1);
   };
 
   return (
@@ -39,7 +44,7 @@ function AddCategoryForm() {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add a New Category</Modal.Title>
+          <Modal.Title>Edit Category</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -82,4 +87,4 @@ function AddCategoryForm() {
   );
 }
 
-export default AddCategoryForm;
+export default EditCategoryForm;

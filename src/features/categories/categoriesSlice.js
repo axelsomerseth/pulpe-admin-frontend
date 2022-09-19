@@ -29,7 +29,12 @@ export const categoriesSlice = createSlice({
       return [...state, action.payload];
     },
     categoryEdited: (state, action) => {
-      // TODO: edit the category in the state array (if needed).
+      const { id, name, description } = action.payload;
+      const existingCategory = state.find((category) => category.id === id);
+      if (existingCategory) {
+        existingCategory.name = name;
+        existingCategory.description = description;
+      }
     },
     categoryRemoved: (state, action) => {
       // TODO: remove category from state array (if needed).
