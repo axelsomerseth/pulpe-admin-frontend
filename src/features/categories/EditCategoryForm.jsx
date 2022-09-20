@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { categoryEdited } from "./categoriesSlice";
+import { categoryEdited, selectCategoryById } from "./categoriesSlice";
 
 function EditCategoryForm() {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ function EditCategoryForm() {
   const { categoryId } = params;
 
   const category = useSelector((state) =>
-    state.categories.find((category) => category.id === parseInt(categoryId))
+    selectCategoryById(state, categoryId)
   );
 
   const [name, setName] = useState(category.name || "");
@@ -31,8 +31,8 @@ function EditCategoryForm() {
           description,
         })
       );
-      navigate(`/categories`);
     }
+    navigate(`/categories`);
   };
 
   return (

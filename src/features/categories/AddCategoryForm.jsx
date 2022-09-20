@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { categoryAdded } from "./categoriesSlice";
+import { categoryAdded, totalCategories } from "./categoriesSlice";
 
 function AddCategoryForm() {
   const navigate = useNavigate();
@@ -16,12 +15,14 @@ function AddCategoryForm() {
   const onNameChanged = (e) => setName(e.target.value);
   const onDescriptionChanged = (e) => setDescription(e.target.value);
 
+  const nextId = useSelector(totalCategories) + 1;
+
   const onModalClose = () => navigate(-1);
   const onModalSaveChanges = () => {
     if (name && description) {
       dispatch(
         categoryAdded({
-          id: nanoid(),
+          id: nextId,
           name,
           description,
         })

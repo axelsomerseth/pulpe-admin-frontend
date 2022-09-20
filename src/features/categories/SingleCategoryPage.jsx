@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { selectCategoryById } from "./categoriesSlice";
 
 function SingleCategoryPage() {
   const params = useParams();
@@ -10,7 +11,7 @@ function SingleCategoryPage() {
   const { categoryId } = params;
 
   const category = useSelector((state) =>
-    state.categories.find((category) => category.id === parseInt(categoryId))
+    selectCategoryById(state, categoryId)
   );
 
   const onModalClose = () => navigate(-1);
