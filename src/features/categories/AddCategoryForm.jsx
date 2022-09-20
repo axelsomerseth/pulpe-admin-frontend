@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { addNewCategory } from "./categoriesSlice";
+import { createCategory } from "./categoriesSlice";
 
 function AddCategoryForm() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function AddCategoryForm() {
     if (canSave) {
       try {
         setAddRequestStatus("pending");
-        await dispatch(addNewCategory({ name, description })).unwrap();
+        await dispatch(createCategory({ name, description })).unwrap();
         setName("");
         setDescription("");
       } catch (error) {

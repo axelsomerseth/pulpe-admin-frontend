@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { categoryEdited, selectCategoryById } from "./categoriesSlice";
+import { selectCategoryById, updateCategory } from "./categoriesSlice";
 
 function EditCategoryForm() {
   const dispatch = useDispatch();
@@ -17,20 +17,34 @@ function EditCategoryForm() {
 
   const [name, setName] = useState(category.name || "");
   const [description, setDescription] = useState(category.description || "");
+  const [addRequestStatus, setAddRequestStatus] = useState("idle");
 
   const onNameChanged = (e) => setName(e.target.value);
   const onDescriptionChanged = (e) => setDescription(e.target.value);
 
+  const canUpdate =
+    [categoryId, name, description].every(Boolean) &&
+    addRequestStatus === "idle";
+
   const onModalClose = () => navigate(-1);
-  const onModalSaveChanges = () => {
-    if (categoryId && name && description) {
-      dispatch(
-        categoryEdited({
-          id: parseInt(categoryId),
-          name,
-          description,
-        })
-      );
+  const onModalSaveChanges = async () => {
+    if (canUpdate) {
+      try {
+        setAddRequestStatus("pending");
+        await dispatch(
+          updateCategory({
+            id: parseInt(categoryId),
+            name,
+            description,
+          })
+        ).unwrap();
+        setName("");
+        setDescription("");
+      } catch (error) {
+        console.error("Failed to update the category: ", error);
+      } finally {
+        setAddRequestStatus("idle");
+      }
     }
     navigate(`/categories`);
   };

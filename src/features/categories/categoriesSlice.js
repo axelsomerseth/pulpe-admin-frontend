@@ -1,8 +1,7 @@
 // A "slice" is a collection of Redux reducer logic and actions for a single feature in your app,
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// const BASE_URL = "https://pulpe-admin-api.herokuapp.com";
-const BASE_URL = "http://localhost:5000";
+const backendApiBaseURL = process.env.REACT_APP_BACKEND_API_BASE_URL;
 
 const initialState = {
   categories: [],
@@ -10,19 +9,20 @@ const initialState = {
   error: null, // string | null
 };
 
-// Async thunks.
+// * Async thunks.
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async () => {
-    const response = await fetch(`${BASE_URL}/categories/`, {
+    const response = await fetch(`${backendApiBaseURL}/categories/`, {
       method: "GET",
     });
     const responseBody = await response.json();
     return responseBody.data;
   }
 );
-export const addNewCategory = createAsyncThunk(
-  "categories/addNewCategory",
+
+export const createCategory = createAsyncThunk(
+  "categories/createCategory",
   async (initialCategory) => {
     const options = {
       method: "POST",
@@ -31,13 +31,32 @@ export const addNewCategory = createAsyncThunk(
       },
       body: JSON.stringify(initialCategory),
     };
-    const response = await fetch(`${BASE_URL}/categories/`, options);
+    const response = await fetch(`${backendApiBaseURL}/categories/`, options);
     const responseBody = await response.json();
-    console.log(responseBody);
     return responseBody;
   }
 );
 
+export const updateCategory = createAsyncThunk(
+  "categories/updateCategory",
+  async (categoryUpdated) => {
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(categoryUpdated),
+    };
+    const response = await fetch(
+      `${backendApiBaseURL}/categories/${categoryUpdated.id}`,
+      options
+    );
+    const responseBody = await response.json();
+    return responseBody;
+  }
+);
+
+// * Category Slice (Reducers).
 export const categoriesSlice = createSlice({
   name: "categories",
   initialState,
@@ -75,13 +94,23 @@ export const categoriesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       });
-    builder.addCase(addNewCategory.fulfilled, (state, action) => {
+    builder.addCase(createCategory.fulfilled, (state, action) => {
       state.categories.push(action.payload);
+    });
+    builder.addCase(updateCategory.fulfilled, (state, action) => {
+      const { id, name, description } = action.payload;
+      const existingCategory = state.categories.find(
+        (category) => category.id === id
+      );
+      if (existingCategory) {
+        existingCategory.name = name;
+        existingCategory.description = description;
+      }
     });
   },
 });
 
-// Selectors: Reading the state.
+// * Selectors: Reading the state.
 // The function below is called a selector and allows us to select a value from the state.
 export const selectAllCategories = (state) => state.categories.categories;
 export const selectCategoryById = (state, categoryId) =>
@@ -90,6 +119,7 @@ export const selectCategoryById = (state, categoryId) =>
   );
 export const totalCategories = (state) => state.categories.categories.length;
 
+// * Action Creators.
 export const { categoryAdded, categoryEdited, categoryRemoved } =
   categoriesSlice.actions;
 
