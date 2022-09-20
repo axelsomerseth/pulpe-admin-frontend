@@ -1,6 +1,9 @@
 // A "slice" is a collection of Redux reducer logic and actions for a single feature in your app,
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+// const BASE_URL = "https://pulpe-admin-api.herokuapp.com";
+const BASE_URL = "http://localhost:5000";
+
 const initialState = {
   categories: [],
   status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -11,12 +14,9 @@ const initialState = {
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async () => {
-    const response = await fetch(
-      `https://pulpe-admin-api.herokuapp.com/categories/`,
-      {
-        method: "GET",
-      }
-    );
+    const response = await fetch(`${BASE_URL}/categories/`, {
+      method: "GET",
+    });
     const responseBody = await response.json();
     return responseBody.data;
   }
@@ -24,15 +24,17 @@ export const fetchCategories = createAsyncThunk(
 export const addNewCategory = createAsyncThunk(
   "categories/addNewCategory",
   async (initialCategory) => {
-    const response = await fetch(
-      `https://pulpe-admin-api.herokuapp.com/categories/`,
-      {
-        method: "POST",
-        body: JSON.stringify(initialCategory),
-      }
-    );
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(initialCategory),
+    };
+    const response = await fetch(`${BASE_URL}/categories/`, options);
     const responseBody = await response.json();
-    return responseBody.data;
+    console.log(responseBody);
+    return responseBody;
   }
 );
 
@@ -67,13 +69,15 @@ export const categoriesSlice = createSlice({
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.status = "succeeded";
-        // Add any fetched posts to the array
         state.categories = [...action.payload];
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
+    builder.addCase(addNewCategory.fulfilled, (state, action) => {
+      state.categories.push(action.payload);
+    });
   },
 });
 

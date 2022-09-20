@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { categoryAdded, totalCategories } from "./categoriesSlice";
+import { addNewCategory } from "./categoriesSlice";
 
 function AddCategoryForm() {
   const navigate = useNavigate();
@@ -11,22 +11,27 @@ function AddCategoryForm() {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [addRequestStatus, setAddRequestStatus] = useState("idle");
 
   const onNameChanged = (e) => setName(e.target.value);
   const onDescriptionChanged = (e) => setDescription(e.target.value);
 
-  const nextId = useSelector(totalCategories) + 1;
+  const canSave =
+    [name, description].every(Boolean) && addRequestStatus === "idle";
 
   const onModalClose = () => navigate(-1);
-  const onModalSaveChanges = () => {
-    if (name && description) {
-      dispatch(
-        categoryAdded({
-          id: nextId,
-          name,
-          description,
-        })
-      );
+  const onModalSaveChanges = async () => {
+    if (canSave) {
+      try {
+        setAddRequestStatus("pending");
+        await dispatch(addNewCategory({ name, description })).unwrap();
+        setName("");
+        setDescription("");
+      } catch (error) {
+        console.error("Failed to save the category: ", error);
+      } finally {
+        setAddRequestStatus("idle");
+      }
     }
     navigate(-1);
   };
