@@ -1,7 +1,10 @@
 // A "slice" is a collection of Redux reducer logic and actions for a single feature in your app,
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-const backendApiBaseURL = process.env.REACT_APP_BACKEND_API_BASE_URL;
+import {
+  listCategories,
+  createCategory,
+  updateCategory,
+} from "../../services/categories";
 
 const initialState = {
   categories: [],
@@ -13,46 +16,21 @@ const initialState = {
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async () => {
-    const response = await fetch(`${backendApiBaseURL}/categories/`, {
-      method: "GET",
-    });
-    const responseBody = await response.json();
-    return responseBody.data;
+    return await listCategories();
   }
 );
 
-export const createCategory = createAsyncThunk(
-  "categories/createCategory",
+export const addNewCategory = createAsyncThunk(
+  "categories/addNewCategory",
   async (initialCategory) => {
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(initialCategory),
-    };
-    const response = await fetch(`${backendApiBaseURL}/categories/`, options);
-    const responseBody = await response.json();
-    return responseBody;
+    return await createCategory(initialCategory);
   }
 );
 
-export const updateCategory = createAsyncThunk(
-  "categories/updateCategory",
+export const editCategory = createAsyncThunk(
+  "categories/editCategory",
   async (categoryUpdated) => {
-    const options = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(categoryUpdated),
-    };
-    const response = await fetch(
-      `${backendApiBaseURL}/categories/${categoryUpdated.id}`,
-      options
-    );
-    const responseBody = await response.json();
-    return responseBody;
+    return await updateCategory(categoryUpdated);
   }
 );
 
@@ -62,7 +40,7 @@ export const categoriesSlice = createSlice({
   initialState,
   // Reducers: Modifying the state.
   reducers: {
-    // TODO: Prepare action payloads
+    // TODO: Prepare action payloads.
     // * Docs: https://redux.js.org/tutorials/essentials/part-4-using-data#preparing-action-payloads
     categoryAdded: (state, action) => {
       state.categories.push(action.payload);
@@ -94,10 +72,10 @@ export const categoriesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       });
-    builder.addCase(createCategory.fulfilled, (state, action) => {
+    builder.addCase(addNewCategory.fulfilled, (state, action) => {
       state.categories.push(action.payload);
     });
-    builder.addCase(updateCategory.fulfilled, (state, action) => {
+    builder.addCase(editCategory.fulfilled, (state, action) => {
       const { id, name, description } = action.payload;
       const existingCategory = state.categories.find(
         (category) => category.id === id

@@ -1,31 +1,65 @@
 import { BACKEND_API_BASE_URL } from ".";
 
-const listCategories = () => {
-  fetch(`${BACKEND_API_BASE_URL}/categories/`, {
+const listCategories = async () => {
+  const response = await fetch(`${BACKEND_API_BASE_URL}/categories/`, {
     method: "GET",
-  }).then((response) => {
-    return response.json();
   });
+  const responseBody = await response.json();
+  return responseBody.data;
 };
 
-const getCategoryById = (categoryId) => {
-  fetch(`${BACKEND_API_BASE_URL}/products/${categoryId}`, {
-    method: "GET",
-  }).then((response) => {
-    return response.json();
-  });
+const getCategoryById = async (categoryId) => {
+  const response = await fetch(
+    `${BACKEND_API_BASE_URL}/products/${categoryId}`,
+    {
+      method: "GET",
+    }
+  );
+  const responseBody = await response.json();
+  return responseBody;
 };
 
-const addCategory = () => {};
+const createCategory = async (category) => {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(category),
+  };
+  const response = await fetch(`${BACKEND_API_BASE_URL}/categories/`, options);
+  const responseBody = await response.json();
+  return responseBody;
+};
 
-const editCategory = () => {};
+const updateCategory = async (category) => {
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(category),
+  };
+  const response = await fetch(
+    `${BACKEND_API_BASE_URL}/categories/${category.id}`,
+    options
+  );
+  const responseBody = await response.json();
+  return responseBody;
+};
 
-const removeCategory = () => {};
+const deleteCategory = async (categoryId) => {
+  const options = {
+    method: "DELETE",
+  };
+  await fetch(`${BACKEND_API_BASE_URL}/categories/${categoryId}`, options);
+  return { id: categoryId, deleted: true };
+};
 
 export {
   listCategories,
   getCategoryById,
-  addCategory,
-  editCategory,
-  removeCategory,
+  createCategory,
+  updateCategory,
+  deleteCategory,
 };

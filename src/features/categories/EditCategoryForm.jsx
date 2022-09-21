@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { selectCategoryById, updateCategory } from "./categoriesSlice";
+import { selectCategoryById, editCategory } from "./categoriesSlice";
 
 function EditCategoryForm() {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function EditCategoryForm() {
       try {
         setAddRequestStatus("pending");
         await dispatch(
-          updateCategory({
+          editCategory({
             id: parseInt(categoryId),
             name,
             description,
