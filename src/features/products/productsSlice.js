@@ -1,30 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+// TODO: think about if products feature could be stored in Redux.
+// ? How many products can exist?
 
-const initialState = [
-  {
-    id: 1,
-    name: "Cerveza Salva Vida 12 oz.",
-    description: "Lager estilo americano",
-    category: "Bebidas Alcoholicas",
-    price: "25.00",
-    stock: 24,
-    created_at: "2022-09-10T04:18:12.849Z",
-    updated_at: null,
-  },
-];
+// import { createSlice } from "@reduxjs/toolkit";
 
-export const productsSlice = createSlice({
-  name: "products",
-  initialState,
-  reducers: {
-    add: (state, action) => {},
-    edit: (state, action) => {},
-    remove: (state, action) => {},
-  },
-});
+// const initialState = [];
 
-export const selectProducts = (state) => state.products;
+// export const productsSlice = createSlice({
+//   name: "products",
+//   initialState,
+//   reducers: {
+//     add: (state, action) => {},
+//     edit: (state, action) => {},
+//     remove: (state, action) => {},
+//   },
+// });
 
-export const { add, edit, remove } = productsSlice.actions;
+// export const selectProducts = (state) => state.products;
 
-export default productsSlice.reducer;
+// export const { add, edit, remove } = productsSlice.actions;
+
+// export default productsSlice.reducer;
