@@ -1,18 +1,46 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { addNewProduct } from "./productsSlice";
 
 function AddProductForm() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
   const [categoryId, setCategoryId] = useState(0);
+  const [addRequestStatus, setAddRequestStatus] = useState("idle");
 
-  const onModalClose = () => navigation(-1);
-  const onModalSaveChanges = () => {};
+  const canSave =
+    [name, description, price, stock, categoryId].every(Boolean) &&
+    addRequestStatus === "idle";
+
+  const onModalClose = () => navigate(-1);
+  const onModalSaveChanges = async () => {
+    if (canSave) {
+      try {
+        setAddRequestStatus("pending");
+        await dispatch(
+          addNewProduct({ name, description, price, stock, categoryId })
+        ).unwrap();
+        setName("");
+        setDescription("");
+        setPrice("");
+        setStock("");
+        setCategoryId("");
+      } catch (error) {
+        console.log("Failed to save the product: ", error);
+      } finally {
+        setAddRequestStatus("idle");
+      }
+    }
+    navigate(-1);
+  };
 
   return (
     <section>

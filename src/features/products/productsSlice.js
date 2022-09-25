@@ -8,7 +8,7 @@ export const fetchProducts = createAsyncThunk(
     return await listProducts();
   }
 );
-const addNewProduct = createAsyncThunk(
+export const addNewProduct = createAsyncThunk(
   "products/addNewProduct",
   async (initialProduct) => {
     return await createProduct(initialProduct);
