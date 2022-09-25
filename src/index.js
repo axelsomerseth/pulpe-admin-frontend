@@ -13,7 +13,9 @@ import SingleCategoryPage from "./features/categories/SingleCategoryPage";
 import EditCategoryForm from "./features/categories/EditCategoryForm";
 
 import ProductsList from "./features/products/ProductsList";
-import Product from "./components/Product";
+import AddProductForm from "./features/products/AddProductForm";
+import SingleProductPage from "./features/products/SingleProductPage";
+import EditProductForm from "./features/products/EditProductForm";
 
 import NotFound from "./routes/NotFound";
 
@@ -44,7 +46,13 @@ root.render(
               />
             </Route>
             <Route path="products" element={<ProductsList />}>
-              <Route path=":productId" element={<Product />} />
+              <Route exact path="new" element={<AddProductForm />} />
+              <Route exact path=":productId" element={<SingleProductPage />} />
+              <Route
+                exact
+                path=":productId/edit"
+                element={<EditProductForm />}
+              />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

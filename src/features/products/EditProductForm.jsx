@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-function AddProductForm() {
+function EditProductForm() {
   const navigation = useNavigate();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -23,7 +23,7 @@ function AddProductForm() {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add a New Product</Modal.Title>
+          <Modal.Title>Edit a Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -102,4 +102,4 @@ function AddProductForm() {
   );
 }
 
-export default AddProductForm;
+export default EditProductForm;

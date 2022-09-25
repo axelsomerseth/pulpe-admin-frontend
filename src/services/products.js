@@ -5,7 +5,7 @@ const listProducts = async () => {
     method: "GET",
   });
   const responseBody = await response.json();
-  return responseBody;
+  return responseBody.data;
 };
 
 const getProductById = async (productId) => {

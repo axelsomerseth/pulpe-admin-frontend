@@ -1,22 +1,51 @@
-// TODO: think about if products feature could be stored in Redux.
-// ? How many products can exist?
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { listProducts } from "../../services/products";
 
-// import { createSlice } from "@reduxjs/toolkit";
+// * Async thunks.
+export const fetchProducts = createAsyncThunk(
+  "products/fetchProducts",
+  async () => {
+    return await listProducts();
+  }
+);
 
-// const initialState = [];
+// * Products Slice (Reducers).
+const initialState = {
+  products: [],
+  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+  error: null, // string | null
+};
+export const productsSlice = createSlice({
+  name: "products",
+  initialState,
+  reducers: {
+    productAdded: (state, action) => {},
+    productEdited: (state, action) => {},
+    productRemoved: (state, action) => {},
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchProducts.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.products = [...action.payload];
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
+});
 
-// export const productsSlice = createSlice({
-//   name: "products",
-//   initialState,
-//   reducers: {
-//     add: (state, action) => {},
-//     edit: (state, action) => {},
-//     remove: (state, action) => {},
-//   },
-// });
+// * Selectors: Reading the state.
+export const selectAllProducts = (state) => state.products.products;
+export const selectStatus = (state) => state.products.status;
+export const selectError = (state) => state.products.error;
 
-// export const selectProducts = (state) => state.products;
+// * Action Creators.
+export const { productAdded, productEdited, productRemoved } =
+  productsSlice.actions;
 
-// export const { add, edit, remove } = productsSlice.actions;
-
-// export default productsSlice.reducer;
+export default productsSlice.reducer;

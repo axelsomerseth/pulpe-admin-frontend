@@ -6,12 +6,6 @@ import {
   updateCategory,
 } from "../../services/categories";
 
-const initialState = {
-  categories: [],
-  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
-  error: null, // string | null
-};
-
 // * Async thunks.
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
@@ -34,7 +28,12 @@ export const editCategory = createAsyncThunk(
   }
 );
 
-// * Category Slice (Reducers).
+// * Categories Slice (Reducers).
+const initialState = {
+  categories: [],
+  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+  error: null, // string | null
+};
 export const categoriesSlice = createSlice({
   name: "categories",
   initialState,
@@ -91,6 +90,8 @@ export const categoriesSlice = createSlice({
 // * Selectors: Reading the state.
 // The function below is called a selector and allows us to select a value from the state.
 export const selectAllCategories = (state) => state.categories.categories;
+export const selectStatus = (state) => state.categories.status;
+export const selectError = (state) => state.categories.error;
 export const selectCategoryById = (state, categoryId) =>
   state.categories.categories.find(
     (category) => category.id === parseInt(categoryId)

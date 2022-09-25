@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllCategories, fetchCategories } from "./categoriesSlice";
+import {
+  selectAllCategories,
+  fetchCategories,
+  selectStatus,
+  selectError,
+} from "./categoriesSlice";
 import { Switch, Case, Default } from "react-if";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
@@ -9,9 +14,8 @@ import Alert from "react-bootstrap/Alert";
 function CategoriesList() {
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategories);
-
-  const categoriesStatus = useSelector((state) => state.categories.status);
-  const errors = useSelector((state) => state.categories.error);
+  const categoriesStatus = useSelector(selectStatus);
+  const error = useSelector(selectError);
 
   useEffect(() => {
     if (categoriesStatus === "idle") {
@@ -71,11 +75,13 @@ function CategoriesList() {
           </Case>
           <Case condition={categoriesStatus === "failed"}>
             <div className="col">
-              <Alert variant="danger">{errors}</Alert>
+              <Alert variant="danger">{error}</Alert>
             </div>
           </Case>
           <Default>
-            <div className="col">No data</div>
+            <div className="col d-flex justify-content-center mt-5">
+              <h1 className="h1">No data.</h1>
+            </div>
           </Default>
         </Switch>
       </div>
