@@ -17,20 +17,20 @@ function EditCategoryForm() {
 
   const [name, setName] = useState(category.name || "");
   const [description, setDescription] = useState(category.description || "");
-  const [addRequestStatus, setAddRequestStatus] = useState("idle");
+  const [editRequestStatus, setEditRequestStatus] = useState("idle");
 
   const onNameChanged = (e) => setName(e.target.value);
   const onDescriptionChanged = (e) => setDescription(e.target.value);
 
   const canUpdate =
     [categoryId, name, description].every(Boolean) &&
-    addRequestStatus === "idle";
+    editRequestStatus === "idle";
 
   const onModalClose = () => navigate(-1);
   const onModalSaveChanges = async () => {
     if (canUpdate) {
       try {
-        setAddRequestStatus("pending");
+        setEditRequestStatus("pending");
         await dispatch(
           editCategory({
             id: parseInt(categoryId),
@@ -43,7 +43,7 @@ function EditCategoryForm() {
       } catch (error) {
         console.error("Failed to update the category: ", error);
       } finally {
-        setAddRequestStatus("idle");
+        setEditRequestStatus("idle");
       }
     }
     navigate(`/categories`);

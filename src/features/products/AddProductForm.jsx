@@ -30,9 +30,9 @@ function AddProductForm() {
         ).unwrap();
         setName("");
         setDescription("");
-        setPrice("");
-        setStock("");
-        setCategoryId("");
+        setPrice(0);
+        setStock(0);
+        setCategoryId(0);
       } catch (error) {
         console.log("Failed to save the product: ", error);
       } finally {

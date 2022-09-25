@@ -55,7 +55,9 @@ function ProductsList() {
                       <h6 className="card-subtitle mb-2 text-muted">
                         {product.description || ""}
                       </h6>
-                      <p className="card-text">Category: {product.category}</p>
+                      <p className="card-text">
+                        Category: {product.category_id}
+                      </p>
                       <p className="card-text">Price: {product.price}</p>
                       <p className="card-text">Stock: {product.stock}</p>
                       <p className="card-text">

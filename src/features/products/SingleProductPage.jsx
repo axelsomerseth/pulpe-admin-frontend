@@ -95,7 +95,7 @@ function SingleProductPage() {
                 type="text"
                 className="form-control"
                 id="productCategory"
-                value={product.category}
+                value={product.category_id}
                 readOnly
               />
             </div>

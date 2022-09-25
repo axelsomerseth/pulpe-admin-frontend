@@ -1,18 +1,57 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProductById, editProduct } from "./productsSlice";
 
 function EditProductForm() {
-  const navigation = useNavigate();
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [stock, setStock] = useState(0);
-  const [categoryId, setCategoryId] = useState(0);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const params = useParams();
+  const { productId } = params;
 
-  const onModalClose = () => navigation(-1);
-  const onModalSaveChanges = () => {};
+  const product = useSelector((state) => selectProductById(state, productId));
+
+  const [name, setName] = useState(product.name || "");
+  const [description, setDescription] = useState(product.description || "");
+  const [price, setPrice] = useState(product.price || 0);
+  const [stock, setStock] = useState(product.stock || 0);
+  const [categoryId, setCategoryId] = useState(product.category_id || 0);
+  const [editRequestStatus, setEditRequestStatus] = useState("idle");
+
+  const canUpdate =
+    [name, description, price, stock, categoryId].every(Boolean) &&
+    editRequestStatus === "idle";
+
+  const onModalClose = () => navigate(-1);
+  const onModalSaveChanges = async () => {
+    if (canUpdate) {
+      try {
+        setEditRequestStatus("pending");
+        await dispatch(
+          editProduct({
+            id: parseInt(productId),
+            name,
+            description,
+            price,
+            stock,
+            categoryId,
+          })
+        );
+        setName("");
+        setDescription("");
+        setPrice(0);
+        setStock(0);
+        setCategoryId(0);
+      } catch (error) {
+        console.error("Failed to update the product: ", error);
+      } finally {
+        setEditRequestStatus("idle");
+      }
+    }
+    navigate(`/products`);
+  };
 
   return (
     <section>

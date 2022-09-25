@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createProduct, listProducts } from "../../services/products";
+import {
+  createProduct,
+  listProducts,
+  updateProduct,
+} from "../../services/products";
 
 // * Async thunks.
 export const fetchProducts = createAsyncThunk(
@@ -12,6 +16,12 @@ export const addNewProduct = createAsyncThunk(
   "products/addNewProduct",
   async (initialProduct) => {
     return await createProduct(initialProduct);
+  }
+);
+export const editProduct = createAsyncThunk(
+  "products/editProduct",
+  async (product) => {
+    return await updateProduct(product);
   }
 );
 
@@ -48,6 +58,20 @@ export const productsSlice = createSlice({
       state.products.push(action.payload);
     });
     // * Action: products/editProduct
+    builder.addCase(editProduct.fulfilled, (state, action) => {
+      const { id, name, description, price, stock, categoryId } =
+        action.payload;
+      const existingProduct = state.products.find(
+        (product) => product.id === id
+      );
+      if (existingProduct) {
+        existingProduct.name = name;
+        existingProduct.description = description;
+        existingProduct.price = price;
+        existingProduct.stock = stock;
+        existingProduct.categoryId = categoryId;
+      }
+    });
   },
 });
 
