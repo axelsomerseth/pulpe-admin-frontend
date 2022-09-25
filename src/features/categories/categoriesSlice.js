@@ -59,6 +59,7 @@ export const categoriesSlice = createSlice({
     },
   },
   extraReducers(builder) {
+    // * Action: products/fetchCategories
     builder
       .addCase(fetchCategories.pending, (state, action) => {
         state.status = "loading";
@@ -71,9 +72,11 @@ export const categoriesSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       });
+    // * Action: products/addNewCategory
     builder.addCase(addNewCategory.fulfilled, (state, action) => {
       state.categories.push(action.payload);
     });
+    // * Action: products/editCategory
     builder.addCase(editCategory.fulfilled, (state, action) => {
       const { id, name, description } = action.payload;
       const existingCategory = state.categories.find(

@@ -1,11 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { listProducts } from "../../services/products";
+import { createProduct, listProducts } from "../../services/products";
 
 // * Async thunks.
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
     return await listProducts();
+  }
+);
+const addNewProduct = createAsyncThunk(
+  "products/addNewProduct",
+  async (initialProduct) => {
+    return await createProduct(initialProduct);
   }
 );
 
@@ -24,6 +30,7 @@ export const productsSlice = createSlice({
     productRemoved: (state, action) => {},
   },
   extraReducers(builder) {
+    // * Action: products/fetchProducts
     builder
       .addCase(fetchProducts.pending, (state, action) => {
         state.status = "loading";
@@ -36,6 +43,11 @@ export const productsSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       });
+    // * Action: products/addNewProduct
+    builder.addCase(addNewProduct.fulfilled, (state, action) => {
+      state.products.push(action.payload);
+    });
+    // * Action: products/editProduct
   },
 });
 
@@ -43,6 +55,8 @@ export const productsSlice = createSlice({
 export const selectAllProducts = (state) => state.products.products;
 export const selectStatus = (state) => state.products.status;
 export const selectError = (state) => state.products.error;
+export const selectProductById = (state, productId) =>
+  state.products.products.find((product) => product.id === parseInt(productId));
 
 // * Action Creators.
 export const { productAdded, productEdited, productRemoved } =
