@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { selectProductById } from "./productsSlice";
+import SelectCategory from "../../components/SelectCategory";
 
 function SingleProductPage() {
   const params = useParams();
@@ -87,18 +88,7 @@ function SingleProductPage() {
                 readOnly
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="productCategory" className="form-label">
-                Category
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="productCategory"
-                value={product.category_id}
-                readOnly
-              />
-            </div>
+            <SelectCategory value={product.category_id} disabled={true} />
             <div className="mb-3">
               <label htmlFor="productCreatedAt" className="form-label">
                 Created At

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { addNewProduct } from "./productsSlice";
+import SelectCategory from "../../components/SelectCategory";
 
 function AddProductForm() {
   const navigate = useNavigate();
@@ -26,7 +27,13 @@ function AddProductForm() {
       try {
         setAddRequestStatus("pending");
         await dispatch(
-          addNewProduct({ name, description, price, stock, categoryId })
+          addNewProduct({
+            name,
+            description,
+            price: parseFloat(price),
+            stock: parseInt(stock),
+            category_id: parseInt(categoryId),
+          })
         ).unwrap();
         setName("");
         setDescription("");
@@ -103,18 +110,10 @@ function AddProductForm() {
                 onChange={(e) => setStock(e.target.value)}
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="productCategory" className="form-label">
-                Category
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="productCategory"
-                value={categoryId}
-                onChange={(e) => setCategoryId(e.target.value)}
-              />
-            </div>
+            <SelectCategory
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+            />
           </form>
         </Modal.Body>
         <Modal.Footer>

@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProductById, editProduct } from "./productsSlice";
+import SelectCategory from "../../components/SelectCategory";
 
 function EditProductForm() {
   const navigate = useNavigate();
@@ -34,9 +35,9 @@ function EditProductForm() {
             id: parseInt(productId),
             name,
             description,
-            price,
-            stock,
-            categoryId,
+            price: parseFloat(price),
+            stock: parseInt(stock),
+            category_id: parseInt(categoryId),
           })
         );
         setName("");
@@ -114,18 +115,10 @@ function EditProductForm() {
                 onChange={(e) => setStock(e.target.value)}
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="productCategory" className="form-label">
-                Category
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="productCategory"
-                value={categoryId}
-                onChange={(e) => setCategoryId(e.target.value)}
-              />
-            </div>
+            <SelectCategory
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+            />
           </form>
         </Modal.Body>
         <Modal.Footer>
