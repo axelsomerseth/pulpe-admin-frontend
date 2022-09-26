@@ -99,6 +99,18 @@ function SingleProductPage() {
                 readOnly
               />
             </div>
+            <div className="mb-3">
+              <label htmlFor="productCreatedAt" className="form-label">
+                Created At
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="productCreatedAt"
+                value={product.created_at ? new Date(product.created_at) : ""}
+                readOnly
+              />
+            </div>
           </form>
         </Modal.Body>
         <Modal.Footer>

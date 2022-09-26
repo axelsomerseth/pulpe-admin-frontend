@@ -85,18 +85,22 @@ function SingleCategoryPage() {
                 readOnly
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="categoryUpdatedAt" className="form-label">
-                Updated At
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="categoryUpdatedAt"
-                value={category.updated_at ? new Date(category.updated_at) : ""}
-                readOnly
-              />
-            </div>
+            {category.updated_at && (
+              <div className="mb-3">
+                <label htmlFor="categoryUpdatedAt" className="form-label">
+                  Updated At
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="categoryUpdatedAt"
+                  value={
+                    category.updated_at ? new Date(category.updated_at) : ""
+                  }
+                  readOnly
+                />
+              </div>
+            )}
           </form>
         </Modal.Body>
         <Modal.Footer>
