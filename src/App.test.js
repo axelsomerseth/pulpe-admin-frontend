@@ -1,8 +1,10 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+// * Docs: https://testing-library.com/docs/example-react-router/
+test("renders Pulpe Admin text", () => {
+  render(<App />, { wrapper: BrowserRouter });
+  const headingElement = screen.getByText(/Pulpe Admin/i);
+  expect(headingElement).toBeInTheDocument();
 });
