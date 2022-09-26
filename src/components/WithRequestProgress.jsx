@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 // * Request Progress State Machine: https://redux.js.org/tutorials/essentials/part-5-async-logic#loading-state-for-requests
 // Inspired by: https://www.smashingmagazine.com/2020/06/higher-order-components-react/#use-cases
 function WithRequestProgress(WrappedComponent) {
-  return function WihLoadingComponent({ status, error, ...props }) {
+  return function WithRequestProgressComponent({ status, error, ...props }) {
     switch (status) {
       case "idle":
         return (
