@@ -10,6 +10,7 @@ import {
 import { Switch, Case, Default } from "react-if";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+import CategoryCard from "./CategoryCard";
 
 function CategoriesList() {
   const dispatch = useDispatch();
@@ -49,26 +50,7 @@ function CategoriesList() {
             {categories.map((category) => {
               return (
                 <div key={category.id} className="col mt-2 mb-2">
-                  <div className="card">
-                    <div className="card-body">
-                      <h5 className="card-title">{category.name}</h5>
-                      <h6 className="card-subtitle mb-2 text-muted">
-                        {category.description || ""}
-                      </h6>
-                      <Link
-                        to={`/categories/${category.id}`}
-                        className="btn btn-primary m-1"
-                      >
-                        View details
-                      </Link>
-                      <Link
-                        to={`/categories/${category.id}/edit`}
-                        className="btn btn-secondary m-1"
-                      >
-                        Edit
-                      </Link>
-                    </div>
-                  </div>
+                  <CategoryCard category={category} />
                 </div>
               );
             })}
