@@ -1,4 +1,8 @@
 import React, { useEffect } from "react";
+import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
+import { Switch, Case, Default } from "react-if";
+import ProductCard from "./ProductCard";
 import { Outlet, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,10 +11,7 @@ import {
   selectError,
   fetchProducts,
 } from "./productsSlice";
-import { Switch, Case, Default } from "react-if";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
-import ProductCard from "./ProductCard";
+import { fetchCategories } from "../categories/categoriesSlice";
 
 function ProductsList() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function ProductsList() {
 
   useEffect(() => {
     if (productsStatus === "idle") {
+      dispatch(fetchCategories());
       dispatch(fetchProducts());
     }
   }, [productsStatus, dispatch]);
