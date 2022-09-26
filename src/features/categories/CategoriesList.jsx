@@ -7,16 +7,19 @@ import {
   selectStatus,
   selectError,
 } from "./categoriesSlice";
-import { Switch, Case, Default } from "react-if";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
-import CategoryCard from "./CategoryCard";
+
+import CategoryCardsList from "./CategoryCardsList";
+import WithRequestProgress from "../../components/WithRequestProgress";
 
 function CategoriesList() {
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategories);
   const categoriesStatus = useSelector(selectStatus);
   const error = useSelector(selectError);
+
+  // Calling a Higher-Order Component.
+  const CategoryCardsListWithRequestProgress =
+    WithRequestProgress(CategoryCardsList);
 
   useEffect(() => {
     if (categoriesStatus === "idle") {
@@ -40,32 +43,11 @@ function CategoriesList() {
         </div>
       </div>
       <div className="row row-cols-1 mt-2 mb-2">
-        <Switch>
-          <Case condition={categoriesStatus === "loading"}>
-            <div className="col d-flex justify-content-center">
-              <Spinner animation="border" role="status"></Spinner>
-            </div>
-          </Case>
-          <Case condition={categoriesStatus === "succeeded"}>
-            {categories.map((category) => {
-              return (
-                <div key={category.id} className="col mt-2 mb-2">
-                  <CategoryCard category={category} />
-                </div>
-              );
-            })}
-          </Case>
-          <Case condition={categoriesStatus === "failed"}>
-            <div className="col">
-              <Alert variant="danger">{error}</Alert>
-            </div>
-          </Case>
-          <Default>
-            <div className="col d-flex justify-content-center mt-5">
-              <h1 className="h1">No data.</h1>
-            </div>
-          </Default>
-        </Switch>
+        <CategoryCardsListWithRequestProgress
+          status={categoriesStatus}
+          error={error}
+          categories={categories}
+        />
       </div>
     </div>
   );

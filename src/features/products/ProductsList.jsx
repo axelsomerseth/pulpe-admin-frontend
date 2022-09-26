@@ -1,8 +1,4 @@
 import React, { useEffect } from "react";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
-import { Switch, Case, Default } from "react-if";
-import ProductCard from "./ProductCard";
 import { Outlet, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,11 +9,18 @@ import {
 } from "./productsSlice";
 import { fetchCategories } from "../categories/categoriesSlice";
 
+import ProductCardsList from "./ProductCardsList";
+import WithRequestProgress from "../../components/WithRequestProgress";
+
 function ProductsList() {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
   const productsStatus = useSelector(selectStatus);
   const error = useSelector(selectError);
+
+  // Calling a Higher-Order Component.
+  const ProductCardsListWithRequestProgress =
+    WithRequestProgress(ProductCardsList);
 
   useEffect(() => {
     if (productsStatus === "idle") {
@@ -42,20 +45,19 @@ function ProductsList() {
         </div>
       </div>
       <div className="row row-cols-1 mt-2 mb-2">
-        <Switch>
+        <ProductCardsListWithRequestProgress
+          status={productsStatus}
+          error={error}
+          products={products}
+        />
+        {/* <Switch>
           <Case condition={productsStatus === "loading"}>
             <div className="col d-flex justify-content-center">
               <Spinner animation="border" role="status"></Spinner>
             </div>
           </Case>
           <Case condition={productsStatus === "succeeded"}>
-            {products.map((product) => {
-              return (
-                <div key={product.id} className="col mt-2 mb-2">
-                  <ProductCard product={product} />
-                </div>
-              );
-            })}
+            <ProductCardsList products={products} />
           </Case>
           <Case condition={productsStatus === "failed"}>
             <div className="col">
@@ -67,7 +69,7 @@ function ProductsList() {
               <h1 className="h1">No data.</h1>
             </div>
           </Default>
-        </Switch>
+        </Switch> */}
       </div>
     </div>
   );
