@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - "main"
+
+env:
+  REACT_APP_BACKEND_API_BASE_URL: ${{ secrets.REACT_APP_BACKEND_API_BASE_URL }}
+
 jobs:
   ci-cd:
     runs-on: ubuntu-22.04
