@@ -7,9 +7,10 @@ on:
 
 env:
   REACT_APP_BACKEND_API_BASE_URL: ${{ secrets.REACT_APP_BACKEND_API_BASE_URL }}
+  AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
 
 jobs:
-  ci-cd:
+  build:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out repository code
@@ -26,20 +27,60 @@ jobs:
       - name: Make build
         run: npm run build
 
-      - name: Upload build folder as artifact
+      - name: Upload build folder as an artifact
         uses: actions/upload-artifact@v3
         with:
           name: build
           path: ./build
 
+  test:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Run Tests
         run: npm test -- --coverage
 
-      - name: Upload test coverage folder as artifact
+      - name: Upload test coverage folder as an artifact
         uses: actions/upload-artifact@v3
         with:
           name: coverage
           path: ./coverage
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download artifact "build" folder
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
+
+      - name: Display structure of build directory
+        run: ls -l
+        working-directory: build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -48,14 +89,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Download artifact "build" folder
-        uses: actions/download-artifact@v3
-        with:
-          name: build
-
-      - name: Display structure of current directory
-        run: ls -l
-
       - name: Deploy - Sync build folder to the production website with the AWS CLI
         run: |
-          aws s3 sync ./build s3://pulpe-admin-frontend
+          aws s3 sync ./build s3://$AWS_S3_BUCKET_NAME
