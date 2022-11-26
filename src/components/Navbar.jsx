@@ -1,52 +1,139 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import SignInModal from "./SignInModal";
+import SignUpModal from "./SignUpModal";
+import { UserContext } from "../App";
 
-function Navbar() {
+function CustomNavbar() {
+  // UserContext: used for basic authentication.
+  const { user, setUser } = useContext(UserContext);
+
+  const [showSignInModal, setShowSignInModal] = useState(false); // Register
+  const [showSignUpModal, setShowSignUpModal] = useState(false); // Log in
+
+  const handleSignOut = () => {
+    // Remove user from local storage to log user out.
+    setUser(null);
+    localStorage.removeItem("user");
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
-      <div className="container">
-        <Link className="navbar-brand" to={"/"}>
-          Pulpe Admin
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
-          aria-controls="navbarContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <NavLink className="nav-link" to={"/products"}>
-                Products
-              </NavLink>
-            </li>
-            <li className="nav-item">
+    <>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand>
+            <Link className="navbar-brand" to={"/"}>
+              Pulpe Admin
+            </Link>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto">
               <NavLink className="nav-link" to={"/categories"}>
                 Categories
               </NavLink>
-            </li>
-          </ul>
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-light" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
+              <NavLink className="nav-link" to={"/products"}>
+                Products
+              </NavLink>
+              <NavLink className="nav-link" to={"/transactions"}>
+                Transactions
+              </NavLink>
+            </Nav>
+            <Container>
+              <Row className="justify-content-lg-center" auto="true">
+                <Col
+                  sm={8}
+                  lg={8}
+                  className="d-flex justify-content-lg-end pt-1 pb-1 ps-0"
+                >
+                  <Form className="d-flex me-2" role="search">
+                    <Form.Group>
+                      <Form.Control
+                        className="form-control"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                      ></Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                      <Button
+                        variant="outline-light"
+                        type="submit"
+                        className="ms-2"
+                      >
+                        Search
+                      </Button>
+                    </Form.Group>
+                  </Form>
+                </Col>
+                {user ? (
+                  <>
+                    <Col
+                      sm={2}
+                      lg={2}
+                      className="d-flex justify-content-lg-center pt-1 pb-1 ps-0 pe-0"
+                    >
+                      <Button variant="info" className="me-2">
+                        Profile
+                      </Button>
+                    </Col>
+                    <Col
+                      sm={2}
+                      lg={2}
+                      className="d-flex justify-content-lg-center pt-1 pb-1 ps-0 pe-0"
+                    >
+                      <Button variant="warning" onClick={handleSignOut}>
+                        Sign out
+                      </Button>
+                    </Col>
+                  </>
+                ) : (
+                  <>
+                    <Col
+                      sm={2}
+                      lg={2}
+                      className="d-flex justify-content-lg-center pt-1 pb-1 ps-0 pe-0"
+                    >
+                      <Button
+                        variant="success"
+                        className="me-2"
+                        onClick={() => setShowSignInModal(!showSignInModal)}
+                      >
+                        Sign in
+                      </Button>
+                    </Col>
+                    <Col
+                      sm={2}
+                      lg={2}
+                      className="d-flex justify-content-lg-center pt-1 pb-1 ps-0 pe-0"
+                    >
+                      <Button
+                        variant="secondary"
+                        onClick={() => setShowSignUpModal(!showSignUpModal)}
+                      >
+                        Sign up
+                      </Button>
+                    </Col>
+                  </>
+                )}
+              </Row>
+            </Container>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <>
+        <SignUpModal show={showSignUpModal} setShow={setShowSignUpModal} />
+        <SignInModal show={showSignInModal} setShow={setShowSignInModal} />
+      </>
+    </>
   );
 }
 
-export default Navbar;
+export default CustomNavbar;
