@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-function Footer() {
+const Footer = () => {
   return (
     <footer>
       <Navbar fixed="bottom" bg="light">
@@ -20,6 +20,6 @@ function Footer() {
       </Navbar>
     </footer>
   );
-}
+};
 
 export default Footer;
