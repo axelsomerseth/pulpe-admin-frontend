@@ -1,26 +1,38 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./index.css";
-import "./scss/custom.scss";
 
+// Main
 import App from "./App";
 import Home from "./routes/Home";
 
+// Auth
+import SignUpModal from "./components/SignUpModal";
+import SignInModal from "./components/SignInModal";
+
+// Categories
 import CategoriesList from "./features/categories/CategoriesList";
 import AddCategoryForm from "./features/categories/AddCategoryForm";
 import SingleCategoryPage from "./features/categories/SingleCategoryPage";
 import EditCategoryForm from "./features/categories/EditCategoryForm";
 
+// Products
 import ProductsList from "./features/products/ProductsList";
 import AddProductForm from "./features/products/AddProductForm";
 import SingleProductPage from "./features/products/SingleProductPage";
 import EditProductForm from "./features/products/EditProductForm";
 
+// TODO: Transactions
+
+// NotFound
 import NotFound from "./routes/NotFound";
 
+// Redux store
 import store from "./app/store";
 import { Provider } from "react-redux";
+
+import "./index.css";
+import "./scss/custom.scss";
 
 import reportWebVitals from "./reportWebVitals";
 
@@ -32,6 +44,8 @@ root.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
+            <Route path="sign-up" element={<SignUpModal />} />
+            <Route path="sign-in" element={<SignInModal />} />
             <Route path="categories" element={<CategoriesList />}>
               <Route exact path="new" element={<AddCategoryForm />} />
               <Route
@@ -54,6 +68,10 @@ root.render(
                 element={<EditProductForm />}
               />
             </Route>
+            <Route
+              path="transactions"
+              element={<p>TODO: transactions</p>}
+            ></Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
