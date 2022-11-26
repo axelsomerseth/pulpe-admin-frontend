@@ -8,7 +8,7 @@ function Footer() {
   return (
     <footer>
       <Navbar fixed="bottom" bg="light">
-        <Container fluid className="justify-content-md-center">
+        <Container fluid className="justify-content-center">
           <Row>
             <Col>
               <span className="text-muted">
