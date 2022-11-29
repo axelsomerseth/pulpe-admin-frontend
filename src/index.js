@@ -22,18 +22,22 @@ import AddProductForm from "./features/products/AddProductForm";
 import SingleProductPage from "./features/products/SingleProductPage";
 import EditProductForm from "./features/products/EditProductForm";
 
-// TODO: Transactions
+// Transactions
+import TransactionsList from "./features/transactions/TransactionsList";
+import AddTransactionForm from "./features/transactions/AddTransactionForm";
 
 // NotFound
 import NotFound from "./routes/NotFound";
 
-// Redux store
+// Redux Store
 import store from "./app/store";
 import { Provider } from "react-redux";
 
+// Styles
 import "./index.css";
 import "./scss/custom.scss";
 
+// Analytics
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -68,10 +72,9 @@ root.render(
                 element={<EditProductForm />}
               />
             </Route>
-            <Route
-              path="transactions"
-              element={<p>TODO: transactions</p>}
-            ></Route>
+            <Route path="transactions" element={<TransactionsList />}>
+              <Route exact path="new" element={<AddTransactionForm />} />
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
