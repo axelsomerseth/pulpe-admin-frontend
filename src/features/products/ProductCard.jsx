@@ -9,12 +9,12 @@ function ProductCard({ product }) {
         <h6 className="card-subtitle mb-2 text-muted">
           {product.description || ""}
         </h6>
-        <p className="card-text">Category: {product.category_id}</p>
+        <p className="card-text">Category: {product.categoryId}</p>
         <p className="card-text">Price: {product.price}</p>
         <p className="card-text">Stock: {product.stock}</p>
-        <p className="card-text">Created At: {product.created_at}</p>
-        {product.updated_at && (
-          <p className="card-text">Updated At: {product.updated_at}</p>
+        <p className="card-text">Created At: {product.createdAt}</p>
+        {product.updatedAt && (
+          <p className="card-text">Updated At: {product.updatedAt}</p>
         )}
         <Link to={`/products/${product.id}`} className="btn btn-primary m-1">
           View Details

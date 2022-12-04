@@ -81,11 +81,11 @@ function SingleCategoryPage() {
                 type="text"
                 className="form-control"
                 id="categoryCreatedAt"
-                value={category.created_at ? new Date(category.created_at) : ""}
+                value={category.createdAt ? new Date(category.createdAt) : ""}
                 readOnly
               />
             </div>
-            {category.updated_at && (
+            {category.updatedAt && (
               <div className="mb-3">
                 <label htmlFor="categoryUpdatedAt" className="form-label">
                   Updated At
@@ -94,9 +94,7 @@ function SingleCategoryPage() {
                   type="text"
                   className="form-control"
                   id="categoryUpdatedAt"
-                  value={
-                    category.updated_at ? new Date(category.updated_at) : ""
-                  }
+                  value={category.updatedAt ? new Date(category.updatedAt) : ""}
                   readOnly
                 />
               </div>

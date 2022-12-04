@@ -59,7 +59,7 @@ export const productsSlice = createSlice({
     });
     // * Action: products/editProduct
     builder.addCase(editProduct.fulfilled, (state, action) => {
-      const { id, name, description, price, stock, category_id } =
+      const { id, name, description, price, stock, categoryId } =
         action.payload;
       const existingProduct = state.products.find(
         (product) => product.id === id
@@ -69,7 +69,7 @@ export const productsSlice = createSlice({
         existingProduct.description = description;
         existingProduct.price = price;
         existingProduct.stock = stock;
-        existingProduct.category_id = category_id;
+        existingProduct.categoryId = categoryId;
       }
     });
   },

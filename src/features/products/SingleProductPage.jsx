@@ -88,7 +88,7 @@ function SingleProductPage() {
                 readOnly
               />
             </div>
-            <SelectCategory value={product.category_id} disabled={true} />
+            <SelectCategory value={product.categoryId} disabled={true} />
             <div className="mb-3">
               <label htmlFor="productCreatedAt" className="form-label">
                 Created At
@@ -97,7 +97,7 @@ function SingleProductPage() {
                 type="text"
                 className="form-control"
                 id="productCreatedAt"
-                value={product.created_at ? new Date(product.created_at) : ""}
+                value={product.createdAt ? new Date(product.createdAt) : ""}
                 readOnly
               />
             </div>

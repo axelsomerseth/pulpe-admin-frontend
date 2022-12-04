@@ -18,7 +18,7 @@ function EditProductForm() {
   const [description, setDescription] = useState(product.description || "");
   const [price, setPrice] = useState(product.price || 0);
   const [stock, setStock] = useState(product.stock || 0);
-  const [categoryId, setCategoryId] = useState(product.category_id || 0);
+  const [categoryId, setCategoryId] = useState(product.categoryId || 0);
   const [editRequestStatus, setEditRequestStatus] = useState("idle");
 
   const canUpdate =
@@ -37,7 +37,7 @@ function EditProductForm() {
             description,
             price: parseFloat(price),
             stock: parseInt(stock),
-            category_id: parseInt(categoryId),
+            categoryId: parseInt(categoryId),
           })
         );
         setName("");

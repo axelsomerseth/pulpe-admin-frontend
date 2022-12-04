@@ -32,7 +32,7 @@ function AddProductForm() {
             description,
             price: parseFloat(price),
             stock: parseInt(stock),
-            category_id: parseInt(categoryId),
+            categoryId: parseInt(categoryId),
           })
         ).unwrap();
         setName("");
