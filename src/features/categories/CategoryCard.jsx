@@ -23,6 +23,9 @@ function CategoryCard({ category }) {
       </Card.Body>
       <Card.Footer className="text-muted">
         Created {formatRelative(new Date(category.createdAt), new Date())}
+        {category.updatedAt &&
+          " — Updated " +
+            formatRelative(new Date(category.updatedAt), new Date())}
       </Card.Footer>
     </Card>
   );

@@ -13,7 +13,7 @@ function ProductCard({ product }) {
         </Card.Subtitle>
         <Card.Text> Category: {product.categoryId} </Card.Text>
         <Card.Text> Price: {product.price} </Card.Text>
-        <Card.Text> Category: {product.categoryId} </Card.Text>
+        <Card.Text> Stock: {product.stock} </Card.Text>
         <Link to={`/products/${product.id}`} className="btn btn-primary m-1">
           View Details
         </Link>
@@ -26,12 +26,10 @@ function ProductCard({ product }) {
       </Card.Body>
       <Card.Footer className="text-muted">
         Created {formatRelative(new Date(product.createdAt), new Date())}
+        {product.updatedAt &&
+          " — Updated " +
+            formatRelative(new Date(product.updatedAt), new Date())}
       </Card.Footer>
-      {product.updatedAt && (
-        <Card.Footer className="text-muted">
-          Updated {formatRelative(new Date(product.updatedAt), new Date())}
-        </Card.Footer>
-      )}
     </Card>
   );
 }
