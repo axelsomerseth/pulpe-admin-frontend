@@ -1,14 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import formatRelative from "date-fns/formatRelative";
 
 function CategoryCard({ category }) {
   return (
-    <div className="card">
-      <div className="card-body">
-        <h5 className="card-title">{category.name}</h5>
-        <h6 className="card-subtitle mb-2 text-muted">
+    <Card>
+      <Card.Body>
+        <Card.Title>{category.name}</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">
           {category.description || ""}
-        </h6>
+        </Card.Subtitle>
         <Link to={`/categories/${category.id}`} className="btn btn-primary m-1">
           View details
         </Link>
@@ -18,8 +20,11 @@ function CategoryCard({ category }) {
         >
           Edit
         </Link>
-      </div>
-    </div>
+      </Card.Body>
+      <Card.Footer className="text-muted">
+        Created {formatRelative(new Date(category.createdAt), new Date())}
+      </Card.Footer>
+    </Card>
   );
 }
 

@@ -1,18 +1,19 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import formatRelative from "date-fns/formatRelative";
 import { useSelector } from "react-redux";
 import { selectProductById } from "../products/productsSlice";
 
 function TransactionCard({ transaction }) {
   const movements = {
-    0: "Invalid",
-    1: "In",
-    2: "Out",
+    0: "❌ Invalid",
+    1: "⬇️ In",
+    2: "⬆️ Out",
   };
   const product = useSelector((state) =>
     selectProductById(state, transaction.productId)
   );
+
   return (
     <>
       <Card>
@@ -24,10 +25,9 @@ function TransactionCard({ transaction }) {
           <Card.Text>Description: {transaction.description}</Card.Text>
           <Card.Text>Product: {product.name}</Card.Text>
           <Card.Text>Quantity: {transaction.quantity}</Card.Text>
-          <Button variant="primary">Details</Button>
         </Card.Body>
         <Card.Footer className="text-muted">
-          Created at: {transaction.createdAt}
+          Created {formatRelative(new Date(transaction.createdAt), new Date())}
         </Card.Footer>
       </Card>
     </>
