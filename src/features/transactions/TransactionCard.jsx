@@ -1,20 +1,34 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { useSelector } from "react-redux";
+import { selectProductById } from "../products/productsSlice";
 
-function TransactionCard() {
+function TransactionCard({ transaction }) {
+  const movements = {
+    0: "Invalid",
+    1: "In",
+    2: "Out",
+  };
+  const product = useSelector((state) =>
+    selectProductById(state, transaction.productId)
+  );
   return (
     <>
       <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src="holder.js/100px180" />
         <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
+          <Card.Title>{transaction.type}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">
+            {movements[transaction.movement]} Movement
+          </Card.Subtitle>
+          <Card.Text>Description: {transaction.description}</Card.Text>
+          <Card.Text>Product: {product.name}</Card.Text>
+          <Card.Text>Quantity: {transaction.quantity}</Card.Text>
+          <Button variant="primary">Details</Button>
         </Card.Body>
+        <Card.Footer className="text-muted">
+          Created at: {transaction.createdAt}
+        </Card.Footer>
       </Card>
     </>
   );
