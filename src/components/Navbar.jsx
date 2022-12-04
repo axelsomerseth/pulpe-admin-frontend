@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
@@ -18,11 +18,37 @@ function CustomNavbar() {
   const [showSignInModal, setShowSignInModal] = useState(false); // Register
   const [showSignUpModal, setShowSignUpModal] = useState(false); // Log in
 
+  const location = useLocation();
+
   const handleSignOut = () => {
     // Remove user from local storage to log user out.
     setUser(null);
     localStorage.removeItem("user");
   };
+
+  const handleSignInShow = () => {
+    setShowSignInModal(true);
+  };
+
+  const handleSignUpShow = () => {
+    setShowSignUpModal(true);
+  };
+
+  useEffect(() => {
+    if (user) {
+      setShowSignInModal(false);
+      setShowSignUpModal(false);
+    } else {
+      if (location.pathname === "/sign-in") {
+        setShowSignInModal(true);
+      } else if (location.pathname === "/sign-up") {
+        setShowSignUpModal(true);
+      } else {
+        setShowSignInModal(false);
+        setShowSignUpModal(false);
+      }
+    }
+  }, [location, user]);
 
   return (
     <>
@@ -101,25 +127,26 @@ function CustomNavbar() {
                       lg={2}
                       className="d-flex justify-content-lg-center pt-1 pb-1 ps-0 pe-0"
                     >
-                      <Button
-                        variant="success"
-                        className="me-2"
-                        onClick={() => setShowSignInModal(!showSignInModal)}
+                      <Link
+                        className="btn btn-success me-2"
+                        onClick={handleSignInShow}
+                        to="sign-in"
                       >
                         Sign in
-                      </Button>
+                      </Link>
                     </Col>
                     <Col
                       sm={2}
                       lg={2}
                       className="d-flex justify-content-lg-center pt-1 pb-1 ps-0 pe-0"
                     >
-                      <Button
-                        variant="secondary"
-                        onClick={() => setShowSignUpModal(!showSignUpModal)}
+                      <Link
+                        className="btn btn-secondary"
+                        onClick={handleSignUpShow}
+                        to="sign-up"
                       >
                         Sign up
-                      </Button>
+                      </Link>
                     </Col>
                   </>
                 )}

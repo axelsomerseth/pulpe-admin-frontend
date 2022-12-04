@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -17,6 +18,8 @@ function SignUpModal(props) {
   const [password, setPassword] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSignup = () => {
     signUp(username, password)
@@ -42,8 +45,8 @@ function SignUpModal(props) {
   const handleClose = () => {
     resetForm();
     setShow(false);
+    navigate("/");
   };
-  // const handleShow = () => setShow(true);
 
   return (
     <>
