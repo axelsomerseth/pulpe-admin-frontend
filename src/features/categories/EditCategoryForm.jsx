@@ -49,6 +49,7 @@ function EditCategoryForm() {
     navigate(`/categories`);
   };
 
+  // TODO: migrate this markup to react-bootstrap.
   return (
     <section>
       <Modal

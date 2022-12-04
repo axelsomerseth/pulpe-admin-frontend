@@ -5,7 +5,7 @@ import formatRelative from "date-fns/formatRelative";
 
 function CategoryCard({ category }) {
   return (
-    <Card>
+    <Card className="shadow">
       <Card.Body>
         <Card.Title>{category.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">

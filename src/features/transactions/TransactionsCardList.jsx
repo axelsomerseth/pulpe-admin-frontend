@@ -1,14 +1,15 @@
 import React from "react";
 import TransactionCard from "./TransactionCard";
+import Col from "react-bootstrap/Col";
 
 function TransactionsCardList({ transactions = [] }) {
   return (
     <>
       {transactions.map((transaction) => {
         return (
-          <div key={transaction.id} className="col-12 col-md-6 mt-2 mb-2">
+          <Col key={transaction.id} xs={12} md={6} className="mt-2 mb-2">
             <TransactionCard transaction={transaction} />
-          </div>
+          </Col>
         );
       })}
     </>

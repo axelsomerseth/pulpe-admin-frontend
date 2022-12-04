@@ -7,6 +7,7 @@ import Alert from "react-bootstrap/Alert";
 // Inspired by: https://www.smashingmagazine.com/2020/06/higher-order-components-react/#use-cases
 function WithRequestProgress(WrappedComponent) {
   return function WithRequestProgressComponent({ status, error, ...props }) {
+    // TODO: migrate this markup to react-bootstrap.
     switch (status) {
       case "idle":
         return (
@@ -16,7 +17,7 @@ function WithRequestProgress(WrappedComponent) {
         );
       case "loading":
         return (
-          <div className="col d-flex justify-content-center">
+          <div className="col-12 col-md-12 d-flex justify-content-center">
             <Spinner animation="border" role="status"></Spinner>
           </div>
         );

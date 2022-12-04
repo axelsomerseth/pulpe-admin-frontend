@@ -1,14 +1,15 @@
 import React from "react";
 import CategoryCard from "./CategoryCard";
+import Col from "react-bootstrap/Col";
 
 function CategoryCardsList({ categories = [] }) {
   return (
     <>
       {categories.map((category) => {
         return (
-          <div key={category.id} className="col mt-2 mb-2">
+          <Col key={category.id} xs={12} md={6} className="mt-2 mb-2">
             <CategoryCard category={category} />
-          </div>
+          </Col>
         );
       })}
     </>

@@ -16,7 +16,7 @@ function TransactionCard({ transaction }) {
   );
 
   return (
-    <Card>
+    <Card className="shadow">
       <Card.Body>
         <Card.Title>{transaction.type}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">

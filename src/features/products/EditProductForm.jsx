@@ -54,6 +54,7 @@ function EditProductForm() {
     navigate(`/products`);
   };
 
+  // TODO: migrate this markup to react-bootstrap.
   return (
     <section>
       <Modal

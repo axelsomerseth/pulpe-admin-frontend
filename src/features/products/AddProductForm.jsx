@@ -53,6 +53,7 @@ function AddProductForm() {
     setCategoryId(0);
   };
 
+  // TODO: migrate this markup to react-bootstrap.
   return (
     <section>
       <Modal

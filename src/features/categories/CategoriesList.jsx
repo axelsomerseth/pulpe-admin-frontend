@@ -27,6 +27,7 @@ function CategoriesList() {
     }
   }, [categoriesStatus, dispatch]);
 
+  // TODO: migrate this markup to react-bootstrap.
   return (
     <div className="container">
       <Outlet />

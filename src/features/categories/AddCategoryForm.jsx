@@ -36,6 +36,7 @@ function AddCategoryForm() {
     navigate(-1);
   };
 
+  // TODO: migrate this markup to react-bootstrap.
   return (
     <section>
       <Modal

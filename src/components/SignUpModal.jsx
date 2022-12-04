@@ -49,7 +49,7 @@ function SignUpModal(props) {
   };
 
   return (
-    <>
+    <section>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create an account</Modal.Title>
@@ -89,7 +89,7 @@ function SignUpModal(props) {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </section>
   );
 }
 

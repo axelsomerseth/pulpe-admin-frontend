@@ -1,14 +1,15 @@
 import React from "react";
 import ProductCard from "./ProductCard";
+import Col from "react-bootstrap/Col";
 
 function ProductCardsList({ products = [] }) {
   return (
     <>
       {products.map((product) => {
         return (
-          <div key={product.id} className="col-12 col-md-6 mt-2 mb-2">
+          <Col key={product.id} xs={12} md={6} className="mt-2 mb-2">
             <ProductCard product={product} />
-          </div>
+          </Col>
         );
       })}
     </>

@@ -29,6 +29,7 @@ function ProductsList() {
     }
   }, [productsStatus, dispatch]);
 
+  // TODO: migrate this markup to react-bootstrap.
   return (
     <div className="container">
       <Outlet />
