@@ -25,8 +25,7 @@ function AddCategoryForm() {
       try {
         setAddRequestStatus("pending");
         await dispatch(addNewCategory({ name, description })).unwrap();
-        setName("");
-        setDescription("");
+        resetForm();
       } catch (error) {
         console.error("Failed to save the category: ", error);
       } finally {
@@ -34,6 +33,11 @@ function AddCategoryForm() {
       }
     }
     navigate(-1);
+  };
+
+  const resetForm = () => {
+    setName("");
+    setDescription("");
   };
 
   // TODO: migrate this markup to react-bootstrap.

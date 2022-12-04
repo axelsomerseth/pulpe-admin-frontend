@@ -37,10 +37,10 @@ function AddTransactionForm() {
         await dispatch(
           addNewTransaction({
             type,
-            movement,
-            quantity,
+            movement: parseInt(movement),
+            quantity: parseInt(quantity),
             description,
-            productId,
+            productId: parseInt(productId),
           })
         ).unwrap();
         resetForm();
