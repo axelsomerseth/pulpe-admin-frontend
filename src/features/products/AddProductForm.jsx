@@ -93,7 +93,7 @@ function AddProductForm() {
             </div>
             <div className="mb-3">
               <label htmlFor="productPrice" className="form-label">
-                Price
+                Price ($)
               </label>
               <input
                 type="number"
@@ -105,7 +105,7 @@ function AddProductForm() {
             </div>
             <div className="mb-3">
               <label htmlFor="productStock" className="form-label">
-                Stock
+                Stock (units)
               </label>
               <input
                 type="number"

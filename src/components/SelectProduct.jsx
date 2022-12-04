@@ -21,7 +21,7 @@ function SelectProduct({ value, onChange, disabled = false }) {
           ? products.map((product) => {
               return (
                 <option key={product.id} value={product.id}>
-                  {product.name}
+                  {"ID " + product.id + " - " + product.name}
                 </option>
               );
             })

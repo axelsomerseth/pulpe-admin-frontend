@@ -21,7 +21,7 @@ function SelectCategory({ value, onChange, disabled = false }) {
           ? categories.map((category) => {
               return (
                 <option key={category.id} value={category.id}>
-                  {category.name}
+                  {"ID " + category.id + " - " + category.name}
                 </option>
               );
             })
