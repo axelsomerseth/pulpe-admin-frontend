@@ -16,7 +16,7 @@ function SelectProduct({ value, onChange, disabled = false }) {
         required
         disabled={disabled}
       >
-        <option>Select one product</option>
+        <option>Select a product</option>
         {products
           ? products.map((product) => {
               return (

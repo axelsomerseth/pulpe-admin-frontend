@@ -72,31 +72,36 @@ function AddTransactionForm() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
+              <Form.Label>Transaction Type</Form.Label>
               <Form.Select
                 aria-label="Transaction type select"
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
                 <option>Select a transaction type</option>
-                {/* Inbound and outbound transactions */}
-                <option value="Invalid">Invalid</option>
-                <option value="Adjustment">Adjustment</option>
-                <option value="Transfers">Transfer</option>
-                {/* Only Inbound transactions */}
-                <option value="Receipts">Receipt</option>
-                <option value="Returns">Return</option>
-                <option value="ItemsAddedThroughCycleCounts">
-                  Items added through cycle counts
-                </option>
-                {/* Only Outbound transactions */}
-                <option value="Selling">Selling</option>
-                <option value="Issues">Issue</option>
-                <option value="ItemsRemovedThroughCycleCounts">
-                  Items removed through cycle counts
-                </option>
+                <optgroup label="Inbound and outbound transactions">
+                  <option value="Invalid">Invalid</option>
+                  <option value="Adjustment">Adjustment</option>
+                  <option value="Transfers">Transfer</option>
+                </optgroup>
+                <optgroup label="Only Inbound transactions">
+                  <option value="Receipts">Receipt</option>
+                  <option value="Returns">Return</option>
+                  <option value="ItemsAddedThroughCycleCounts">
+                    Items added through cycle counts
+                  </option>
+                </optgroup>
+                <optgroup label="Only Outbound transactions">
+                  <option value="Selling">Selling</option>
+                  <option value="Issues">Issue</option>
+                  <option value="ItemsRemovedThroughCycleCounts">
+                    Items removed through cycle counts
+                  </option>
+                </optgroup>
               </Form.Select>
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Movement</Form.Label>
               <Form.Select
                 aria-label="Movement select"
                 value={movement}

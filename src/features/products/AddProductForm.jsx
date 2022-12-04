@@ -96,7 +96,7 @@ function AddProductForm() {
                 Price
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="productPrice"
                 value={price}
@@ -108,7 +108,7 @@ function AddProductForm() {
                 Stock
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="productStock"
                 value={stock}

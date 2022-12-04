@@ -97,7 +97,7 @@ function EditProductForm() {
                 Price
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="productPrice"
                 value={price}
@@ -109,7 +109,7 @@ function EditProductForm() {
                 Stock
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="productStock"
                 value={stock}
