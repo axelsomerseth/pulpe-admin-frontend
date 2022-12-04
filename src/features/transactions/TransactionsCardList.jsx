@@ -6,7 +6,7 @@ function TransactionsCardList({ transactions = [] }) {
     <>
       {transactions.map((transaction) => {
         return (
-          <div key={transaction.id} className="col mt-2 mb-2">
+          <div key={transaction.id} className="col-12 col-md-6 mt-2 mb-2">
             <TransactionCard transaction={transaction} />
           </div>
         );

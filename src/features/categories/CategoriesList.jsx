@@ -42,7 +42,7 @@ function CategoriesList() {
           <h1>Categories</h1>
         </div>
       </div>
-      <div className="row row-cols-1 mt-2 mb-2">
+      <div className="row row-cols-1 row-cols-md-2 mt-2 mb-2">
         <CategoryCardsListWithRequestProgress
           status={categoriesStatus}
           error={error}

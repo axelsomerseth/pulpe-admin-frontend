@@ -6,7 +6,7 @@ function ProductCardsList({ products = [] }) {
     <>
       {products.map((product) => {
         return (
-          <div key={product.id} className="col mt-2 mb-2">
+          <div key={product.id} className="col-12 col-md-6 mt-2 mb-2">
             <ProductCard product={product} />
           </div>
         );

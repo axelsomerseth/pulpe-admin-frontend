@@ -7,7 +7,7 @@ function SelectCategory({ value, onChange, disabled = false }) {
   const categories = useSelector(selectAllCategories);
 
   return (
-    <Form.Group className="mb-3" controlId="productCategory">
+    <Form.Group className="mb-3" controlId="category">
       <Form.Label>Category</Form.Label>
       <Form.Select
         aria-label="Select Category"
@@ -17,14 +17,15 @@ function SelectCategory({ value, onChange, disabled = false }) {
         disabled={disabled}
       >
         <option>Select one category</option>
-        {categories &&
-          categories.map((category) => {
-            return (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            );
-          })}
+        {categories
+          ? categories.map((category) => {
+              return (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              );
+            })
+          : [<option disabled>"No categories"</option>]}
       </Form.Select>
     </Form.Group>
   );

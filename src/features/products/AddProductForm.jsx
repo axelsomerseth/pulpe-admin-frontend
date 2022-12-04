@@ -15,17 +15,17 @@ function AddProductForm() {
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
   const [categoryId, setCategoryId] = useState(0);
-  const [addRequestStatus, setAddRequestStatus] = useState("idle");
+  const [requestStatus, setRequestStatus] = useState("idle");
 
   const canSave =
     [name, description, price, stock, categoryId].every(Boolean) &&
-    addRequestStatus === "idle";
+    requestStatus === "idle";
 
   const onModalClose = () => navigate(-1);
   const onModalSaveChanges = async () => {
     if (canSave) {
       try {
-        setAddRequestStatus("pending");
+        setRequestStatus("pending");
         await dispatch(
           addNewProduct({
             name,
@@ -35,18 +35,22 @@ function AddProductForm() {
             categoryId: parseInt(categoryId),
           })
         ).unwrap();
-        setName("");
-        setDescription("");
-        setPrice(0);
-        setStock(0);
-        setCategoryId(0);
+        resetForm();
       } catch (error) {
-        console.log("Failed to save the product: ", error);
+        console.error("Failed to save the product: ", error);
       } finally {
-        setAddRequestStatus("idle");
+        setRequestStatus("idle");
       }
     }
     navigate(-1);
+  };
+
+  const resetForm = () => {
+    setName("");
+    setDescription("");
+    setPrice(0);
+    setStock(0);
+    setCategoryId(0);
   };
 
   return (

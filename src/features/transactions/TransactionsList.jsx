@@ -53,14 +53,12 @@ function TransactionsList() {
           <h1>Transactions</h1>
         </Col>
       </Row>
-      <Row className="mt-3 mb-3">
-        <Col className="d-flex justify-content-center">
-          <TransactionsCardListWithRequestProgress
-            status={transactionsStatus}
-            error={error}
-            transactions={transactions}
-          />
-        </Col>
+      <Row className="mt-3 mb-3 row-cols-1 row-cols-md-2">
+        <TransactionsCardListWithRequestProgress
+          status={transactionsStatus}
+          error={error}
+          transactions={transactions}
+        />
       </Row>
     </Container>
   );
