@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectAllTransactions,
@@ -8,10 +10,9 @@ import {
   selectError,
   fetchTransactions,
 } from "./transactionsSlice";
+import { fetchProducts } from "../products/productsSlice";
 import TransactionsCardList from "./TransactionsCardList";
 import WithRequestProgress from "../../components/WithRequestProgress";
-import { fetchCategories } from "../categories/categoriesSlice";
-import { fetchProducts } from "../products/productsSlice";
 
 function TransactionsList() {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -28,7 +29,6 @@ function TransactionsList() {
 
   useEffect(() => {
     if (transactionsStatus === "idle") {
-      dispatch(fetchCategories());
       dispatch(fetchProducts());
       dispatch(fetchTransactions());
     }
