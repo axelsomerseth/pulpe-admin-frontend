@@ -12,8 +12,8 @@ it("renders PrivateRoute component", () => {
   );
 
   // act
-  const selectElement = screen.getByText(/Test text/i);
+  const spanElement = screen.getByText(/Test text/i);
 
   // assert
-  expect(selectElement).toBeInTheDocument();
+  expect(spanElement).toBeInTheDocument();
 });
