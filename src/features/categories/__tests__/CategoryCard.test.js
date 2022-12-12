@@ -5,6 +5,7 @@ import CategoryCard from "../CategoryCard";
 it("renders CategoryCard component", () => {
   // arrange
   const category = {
+    id: 1,
     name: "Test name",
     description: "Test description",
     createdAt: new Date(),
