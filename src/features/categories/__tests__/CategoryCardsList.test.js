@@ -1,5 +1,6 @@
 import { render } from "../../../utils/customRender";
 import { screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import CategoryCardsList from "../CategoryCardsList";
 
 it("renders CategoryCardsList component", () => {
@@ -12,7 +13,11 @@ it("renders CategoryCardsList component", () => {
       createdAt: new Date(),
     },
   ];
-  render(<CategoryCardsList categories={categories} />);
+  render(
+    <MemoryRouter>
+      <CategoryCardsList categories={categories} />
+    </MemoryRouter>
+  );
 
   // act
   const name = screen.getByText(categories[0].name);

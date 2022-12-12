@@ -1,10 +1,15 @@
 import { screen, fireEvent } from "@testing-library/react";
 import { render } from "../../utils/customRender";
+import { MemoryRouter } from "react-router-dom";
 import SignInModal from "../SignInModal";
 
 it("renders SignInModal component", async () => {
   // arrange
-  render(<SignInModal show={true} setShow={() => {}} />);
+  render(
+    <MemoryRouter>
+      <SignInModal show={true} setShow={() => {}} />
+    </MemoryRouter>
+  );
 
   // act
   const title = screen.getByText(/Sign in to your account/i);
