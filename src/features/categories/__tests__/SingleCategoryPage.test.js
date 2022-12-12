@@ -1,7 +1,7 @@
 import { render } from "../../../utils/customRender";
 import { screen, fireEvent } from "@testing-library/react";
-import SingleCategoryPage from "../SingleCategoryPage";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
+import SingleCategoryPage from "../SingleCategoryPage";
 
 describe("renders AddCategoryForm component", () => {
   it("with data", () => {
