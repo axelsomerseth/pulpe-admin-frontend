@@ -27,7 +27,10 @@ function AddTransactionForm() {
     [type, movement, quantity, description, productId].every(Boolean) &&
     requestStatus === "idle";
 
-  const handleClose = () => setShowAddForm(false);
+  const handleClose = () => {
+    resetForm();
+    setShowAddForm(false);
+  };
 
   const handleSave = async () => {
     if (canSave) {
