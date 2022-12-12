@@ -10,14 +10,13 @@ const AllTheProviders = ({ children }) => {
   const setUser = () => {};
 
   return (
-    <BrowserRouter>
-      <UserContext.Provider value={{ user, setUser }}>
-        <ReduxProvider store={store}>
-          {/* You can add other providers here */}
+    <ReduxProvider store={store}>
+      <BrowserRouter>
+        <UserContext.Provider value={{ user, setUser }}>
           {children}
-        </ReduxProvider>
-      </UserContext.Provider>
-    </BrowserRouter>
+        </UserContext.Provider>
+      </BrowserRouter>
+    </ReduxProvider>
   );
 };
 
