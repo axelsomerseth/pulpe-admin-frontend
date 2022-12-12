@@ -1,6 +1,7 @@
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+import Col from "react-bootstrap/Col";
 
 // * Higher-Order Component: https://reactjs.org/docs/higher-order-components.html
 // * Request Progress State Machine: https://redux.js.org/tutorials/essentials/part-5-async-logic#loading-state-for-requests
@@ -11,29 +12,29 @@ function WithRequestProgress(WrappedComponent) {
     switch (status) {
       case "idle":
         return (
-          <div className="col d-flex justify-content-center mt-5">
+          <Col className="d-flex justify-content-center mt-5">
             <h1 className="h1">Being inactive.</h1>
-          </div>
+          </Col>
         );
       case "loading":
         return (
-          <div className="col-12 col-md-12 d-flex justify-content-center">
+          <Col md={12} sm={12} className="d-flex justify-content-center">
             <Spinner animation="border" role="status"></Spinner>
-          </div>
+          </Col>
         );
       case "succeeded":
         return <WrappedComponent {...props} />;
       case "failed":
         return (
-          <div className="col">
+          <Col>
             <Alert variant="danger">{error}</Alert>
-          </div>
+          </Col>
         );
       default:
         return (
-          <div className="col d-flex justify-content-center mt-5">
+          <Col className="d-flex justify-content-center mt-5">
             <h1 className="h1">No data.</h1>
-          </div>
+          </Col>
         );
     }
   };
