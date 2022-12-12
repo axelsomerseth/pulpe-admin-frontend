@@ -25,7 +25,10 @@ function EditProductForm() {
     [name, description, price, stock, categoryId].every(Boolean) &&
     editRequestStatus === "idle";
 
-  const onModalClose = () => navigate(-1);
+  const onModalClose = () => {
+    resetForm();
+    navigate(-1);
+  };
   const onModalSaveChanges = async () => {
     if (canUpdate) {
       try {
@@ -52,6 +55,15 @@ function EditProductForm() {
       }
     }
     navigate(`/products`);
+  };
+
+  const resetForm = () => {
+    setName("");
+    setDescription("");
+    setPrice(0);
+    setStock(0);
+    setCategoryId(0);
+    setEditRequestStatus("idle");
   };
 
   // TODO: migrate this markup to react-bootstrap.
