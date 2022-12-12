@@ -1,18 +1,18 @@
 import { render } from "../../../utils/customRender";
 import { screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import CategoriesList from "../CategoriesList";
+import ProductsList from "../ProductsList";
 
-it("render CategoriesList component", () => {
+it("render ProductsList component", () => {
   // arrange
   render(
     <MemoryRouter>
-      <CategoriesList />
+      <ProductsList />
     </MemoryRouter>
   );
 
   // act
-  const listTitle = screen.getByText(/Categories/i);
+  const listTitle = screen.getByText(/Products/i);
 
   // assert
   expect(listTitle).toBeInTheDocument();
