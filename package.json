@@ -64,7 +64,8 @@
       "text"
     ],
     "coveragePathIgnorePatterns": [
-      "src/services/*"
+      "src/services/*",
+      "src/hooks/*"
     ]
   }
 }
