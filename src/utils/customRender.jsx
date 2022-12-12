@@ -38,7 +38,18 @@ const setUpStore = () => {
       error: null,
     },
     transactions: {
-      transactions: [],
+      transactions: [
+        {
+          id: 1,
+          type: "Test transaction type",
+          movement: "Test transaction movement",
+          description: "Test transaction description",
+          product: "Test product name",
+          quantity: 6,
+          createdAt: new Date().toISOString(),
+          productId: 1,
+        },
+      ],
       status: "idle",
       error: null,
     },
