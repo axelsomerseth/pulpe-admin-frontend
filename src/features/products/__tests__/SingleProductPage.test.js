@@ -1,23 +1,23 @@
 import { render } from "../../../utils/customRender";
 import { screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import SingleCategoryPage from "../SingleCategoryPage";
+import SingleProductPage from "../SingleProductPage";
 
-describe("renders SingleCategoryPage component", () => {
+describe("renders SingleProductPage component", () => {
   it("with data", () => {
     // arrange
     render(
-      <MemoryRouter initialEntries={["/categories/1"]}>
+      <MemoryRouter initialEntries={["/products/1"]}>
         <Routes>
-          <Route path="categories">
-            <Route path=":categoryId" element={<SingleCategoryPage />} />
+          <Route path="products">
+            <Route path=":productId" element={<SingleProductPage />} />
           </Route>
         </Routes>
       </MemoryRouter>
     );
 
     // act
-    const modalTitle = screen.getByText(/Category Details/i);
+    const modalTitle = screen.getByText(/Product Details/i);
     const closeButton = screen.getByText(/Close/i);
     fireEvent.click(closeButton);
 
@@ -28,17 +28,17 @@ describe("renders SingleCategoryPage component", () => {
   it("without data", () => {
     // arrange
     render(
-      <MemoryRouter initialEntries={["/categories/100"]}>
+      <MemoryRouter initialEntries={["/products/100"]}>
         <Routes>
-          <Route path="categories">
-            <Route path=":categoryId" element={<SingleCategoryPage />} />
+          <Route path="products">
+            <Route path=":productId" element={<SingleProductPage />} />
           </Route>
         </Routes>
       </MemoryRouter>
     );
 
     // act
-    const notFoundSection = screen.getByText(/Category not found!/i);
+    const notFoundSection = screen.getByText(/Product not found!/i);
 
     // assert
     expect(notFoundSection).toBeInTheDocument();

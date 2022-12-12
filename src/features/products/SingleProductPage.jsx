@@ -15,6 +15,14 @@ function SingleProductPage() {
 
   const onModalClose = () => navigate(-1);
 
+  if (!product) {
+    return (
+      <section>
+        <h2>Product not found!</h2>
+      </section>
+    );
+  }
+
   // TODO: migrate this markup to react-bootstrap.
   return (
     <section>
