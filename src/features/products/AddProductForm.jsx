@@ -21,7 +21,10 @@ function AddProductForm() {
     [name, description, price, stock, categoryId].every(Boolean) &&
     requestStatus === "idle";
 
-  const onModalClose = () => navigate(-1);
+  const onModalClose = () => {
+    resetForm();
+    navigate(-1);
+  };
   const onModalSaveChanges = async () => {
     if (canSave) {
       try {
