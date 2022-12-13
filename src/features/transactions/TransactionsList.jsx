@@ -53,7 +53,7 @@ function TransactionsList() {
           <h1>Transactions</h1>
         </Col>
       </Row>
-      <Row className="mt-3 mb-3 row-cols-1 row-cols-md-2">
+      <Row className="mt-3 mb-3 row-cols-1 row-cols-md-3">
         <TransactionsCardListWithRequestProgress
           status={transactionsStatus}
           error={error}

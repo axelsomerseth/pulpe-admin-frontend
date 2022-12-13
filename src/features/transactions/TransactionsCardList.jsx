@@ -7,7 +7,7 @@ function TransactionsCardList({ transactions = [] }) {
     <>
       {transactions.map((transaction) => {
         return (
-          <Col key={transaction.id} xs={12} md={6} className="mt-2 mb-2">
+          <Col key={transaction.id} xs={12} md={4} className="mt-2 mb-2">
             <TransactionCard transaction={transaction} />
           </Col>
         );
