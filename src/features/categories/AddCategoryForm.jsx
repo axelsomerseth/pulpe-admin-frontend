@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 import { addNewCategory } from "./categoriesSlice";
 
 function AddCategoryForm() {
@@ -12,32 +13,38 @@ function AddCategoryForm() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [addRequestStatus, setAddRequestStatus] = useState("idle");
-
-  const onNameChanged = (e) => setName(e.target.value);
-  const onDescriptionChanged = (e) => setDescription(e.target.value);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const canSave =
     [name, description].every(Boolean) && addRequestStatus === "idle";
 
-  const onModalClose = () => navigate(-1);
-  const onModalSaveChanges = async () => {
+  const resetForm = () => {
+    setName("");
+    setDescription("");
+  };
+
+  const handleClose = () => {
+    resetForm();
+    navigate(-1);
+  };
+
+  const handleSave = async (event) => {
     if (canSave) {
+      event.preventDefault();
       try {
         setAddRequestStatus("pending");
         await dispatch(addNewCategory({ name, description })).unwrap();
         resetForm();
       } catch (error) {
         console.error("Failed to save the category: ", error);
+        setAlertMessage(error.message);
       } finally {
         setAddRequestStatus("idle");
+        navigate(-1);
       }
+    } else {
+      setAlertMessage("Please fill in all required fields.");
     }
-    navigate(-1);
-  };
-
-  const resetForm = () => {
-    setName("");
-    setDescription("");
   };
 
   // TODO: migrate this markup to react-bootstrap.
@@ -45,7 +52,7 @@ function AddCategoryForm() {
     <section>
       <Modal
         show={true}
-        onHide={onModalClose}
+        onHide={handleClose}
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -53,7 +60,7 @@ function AddCategoryForm() {
           <Modal.Title>Add a New Category</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+          <form id="addCategoryForm">
             <div className="mb-3">
               <label htmlFor="categoryName" className="form-label">
                 Name
@@ -63,7 +70,8 @@ function AddCategoryForm() {
                 className="form-control"
                 id="categoryName"
                 value={name}
-                onChange={onNameChanged}
+                onChange={(e) => setName(e.target.value)}
+                required
               />
             </div>
             <div className="mb-3">
@@ -75,16 +83,23 @@ function AddCategoryForm() {
                 className="form-control"
                 id="categoryDescription"
                 value={description}
-                onChange={onDescriptionChanged}
+                onChange={(e) => setDescription(e.target.value)}
+                required
               />
             </div>
           </form>
+          {alertMessage && <Alert variant="danger">{alertMessage}</Alert>}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={onModalClose}>
+          <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={onModalSaveChanges}>
+          <Button
+            variant="primary"
+            onClick={handleSave}
+            form="addCategoryForm"
+            type="submit"
+          >
             Save Changes
           </Button>
         </Modal.Footer>

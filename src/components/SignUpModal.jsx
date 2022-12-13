@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Alert from "./Alert.jsx";
+import Alert from "react-bootstrap/Alert";
 import { signUp } from "../services/auth";
 import { UserContext } from "../App";
 
@@ -17,24 +17,10 @@ function SignUpModal(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
-  const [alertType, setAlertType] = useState("");
 
   const navigate = useNavigate();
 
-  const handleSignup = () => {
-    signUp(username, password)
-      .then((response) => {
-        setUser(response);
-        // console.log(response);
-        setAlertMessage(() => "");
-        resetForm();
-      })
-      .catch((error) => {
-        setAlertMessage(() => error.message);
-        setAlertType(() => "danger");
-        console.error(error);
-      });
-  };
+  const canSave = [username, password].every(Boolean);
 
   const resetForm = () => {
     setUsername(() => "");
@@ -48,6 +34,23 @@ function SignUpModal(props) {
     navigate("/");
   };
 
+  const handleSignup = async (event) => {
+    if (canSave) {
+      event.preventDefault();
+      try {
+        const response = await signUp(username, password);
+        setUser(response);
+        handleClose();
+      } catch (error) {
+        console.error("Error trying to signing up: ", error);
+        setAlertMessage(() => error.message);
+      } finally {
+      }
+    } else {
+      setAlertMessage(() => "Please fill in all required fields.");
+    }
+  };
+
   return (
     <section>
       <Modal show={show} onHide={handleClose}>
@@ -55,36 +58,43 @@ function SignUpModal(props) {
           <Modal.Title>Create an account</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form id="signUpForm">
             <Form.Group>
               <Form.Label>Username (Email address)</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter Username"
+                placeholder="Enter your Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                required
               />
               <Form.Text className="text-muted">
-                We'll never share your username | email with anyone else.
+                We'll never share your email with anyone else.
               </Form.Text>
             </Form.Group>
             <Form.Group>
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Password"
+                placeholder="Enter your Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </Form.Group>
           </Form>
-          {alertMessage && <Alert message={alertMessage} type={alertType} />}
+          {alertMessage && <Alert variant="danger">{alertMessage}</Alert>}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSignup}>
+          <Button
+            variant="primary"
+            onClick={handleSignup}
+            form="signUpForm"
+            type="submit"
+          >
             Sign up
           </Button>
         </Modal.Footer>

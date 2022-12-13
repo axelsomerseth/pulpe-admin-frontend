@@ -12,8 +12,9 @@ const signUp = async (username, password) => {
   )
     .then((response) => {
       // authentication unsuccessful if there's a status code distinct to 200.
-      if (response.status !== 200) {
-        return null;
+      if (response.status !== 201) {
+        // return null;
+        throw new Error("Error: Unauthorized.");
       }
 
       // authentication was successful
@@ -24,6 +25,7 @@ const signUp = async (username, password) => {
     })
     .catch((error) => {
       console.error(error);
+      return error;
     });
   return response;
 };
@@ -41,7 +43,8 @@ const signIn = async (username, password) => {
     .then((response) => {
       // authentication unsuccessful if there's a status code distinct to 200.
       if (response.status !== 200) {
-        return null;
+        // return null;
+        throw new Error("Error: Unauthorized.");
       }
 
       // authentication was successful
@@ -54,6 +57,7 @@ const signIn = async (username, password) => {
     })
     .catch((error) => {
       console.error(error);
+      return error;
     });
   return response;
 };

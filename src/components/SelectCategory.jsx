@@ -16,7 +16,9 @@ function SelectCategory({ value, onChange, disabled = false }) {
         required
         disabled={disabled}
       >
-        <option>Select one category</option>
+        <option defaultValue value="">
+          Select one category
+        </option>
         {categories
           ? categories.map((category) => {
               return (

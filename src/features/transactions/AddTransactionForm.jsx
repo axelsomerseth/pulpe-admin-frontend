@@ -14,12 +14,12 @@ import { addNewTransaction } from "./transactionsSlice";
 function AddTransactionForm() {
   const [showAddForm, setShowAddForm] = useOutletContext();
   const [type, setType] = useState("");
-  const [movement, setMovement] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  const [movement, setMovement] = useState("");
+  const [quantity, setQuantity] = useState("");
   const [description, setDescription] = useState("");
-  const [productId, setProductId] = useState(0);
+  const [productId, setProductId] = useState("");
   const [requestStatus, setRequestStatus] = useState("idle");
-  const [error, setError] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
 
   const dispatch = useDispatch();
 
@@ -27,14 +27,22 @@ function AddTransactionForm() {
     [type, movement, quantity, description, productId].every(Boolean) &&
     requestStatus === "idle";
 
+  const resetForm = () => {
+    setType("");
+    setMovement("");
+    setQuantity("");
+    setDescription("");
+    setProductId("");
+  };
+
   const handleClose = () => {
     resetForm();
     setShowAddForm(false);
   };
 
-  const handleSave = async () => {
+  const handleSave = async (event) => {
     if (canSave) {
-      setError("");
+      event.preventDefault();
       try {
         setRequestStatus("pending");
         await dispatch(
@@ -49,21 +57,14 @@ function AddTransactionForm() {
         resetForm();
       } catch (error) {
         console.error("Failed to save the transaction: ", error);
+        setAlertMessage(error.message);
       } finally {
         setRequestStatus("idle");
         setShowAddForm(false);
       }
     } else {
-      setError("Please fill in the form.");
+      setAlertMessage("Please fill in all required fields.");
     }
-  };
-
-  const resetForm = () => {
-    setType("");
-    setMovement(0);
-    setQuantity(0);
-    setDescription("");
-    setProductId(0);
   };
 
   return (
@@ -73,15 +74,18 @@ function AddTransactionForm() {
           <Modal.Title>Add Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form id="addTransactionForm">
             <Form.Group className="mb-3">
               <Form.Label>Transaction Type</Form.Label>
               <Form.Select
                 aria-label="Transaction type select"
                 value={type}
                 onChange={(e) => setType(e.target.value)}
+                required
               >
-                <option>Select a transaction type</option>
+                <option defaultValue value="">
+                  Select a transaction type
+                </option>
                 <optgroup label="Inbound and outbound transactions">
                   <option value="Invalid">Invalid</option>
                   <option value="Adjustment">Adjustment</option>
@@ -109,8 +113,11 @@ function AddTransactionForm() {
                 aria-label="Movement select"
                 value={movement}
                 onChange={(e) => setMovement(e.target.value)}
+                required
               >
-                <option>Select a movement</option>
+                <option defaultValue value="">
+                  Select a movement
+                </option>
                 <option value={0}>Invalid</option>
                 <option value={1}>In</option>
                 <option value={2}>Out</option>
@@ -123,6 +130,7 @@ function AddTransactionForm() {
                 id="quantity"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -133,6 +141,7 @@ function AddTransactionForm() {
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                required
               />
             </Form.Group>
             <SelectProduct
@@ -140,11 +149,11 @@ function AddTransactionForm() {
               onChange={(e) => setProductId(e.target.value)}
             />
           </Form>
-          {error && (
+          {alertMessage && (
             <Container>
               <Row>
                 <Col>
-                  <Alert variant="danger">{error}</Alert>
+                  <Alert variant="danger">{alertMessage}</Alert>
                 </Col>
               </Row>
             </Container>
@@ -158,7 +167,12 @@ function AddTransactionForm() {
           >
             Close
           </Link>
-          <Button variant="primary" onClick={handleSave}>
+          <Button
+            variant="primary"
+            onClick={handleSave}
+            form="addTransactionForm"
+            type="submit"
+          >
             Save Changes
           </Button>
         </Modal.Footer>
